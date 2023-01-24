@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap");
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 1.5rem;
+  width: 100%;
+  background: var(--bodyColor);
+  font-family: "Yeon Sung", cursive;
+}
+.side_text {
+  width: 30%;
+  text-align: center;
+  /* outline: 2px solid black; */
+}
+
+.side_text h1 {
+  font-size: 40pt;
+  text-transform: uppercase;
+}
+.side_text p {
+  font-size: 25pt;
+  text-transform: capitalize;
+}
+
+.map_container {
+  padding: 0.5rem;
+  width: 70%;
+  height: 80%;
+}
+
+@media screen and (max-width: 800px) {
+  .map_container {
+    width: 100%;
+  }
+  .side_text {
+    width: 100%;
+  }
+
+  .side_text h1 {
+    font-size: 30pt;
+  }
+
+  .side_text p {
+    font-size: 20pt;
+  }
+}
