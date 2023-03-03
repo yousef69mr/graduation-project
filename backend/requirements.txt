@@ -1,0 +1,10 @@
+Django==4.1.5
+django-countries
+django-cors-headers
+django-environ
+django-phonenumber-field
+djangorestframework==3.14.0
+PyJWT
+djangorestframework-simplejwt
+psycopg2
+Pillow
