@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import css from "./EgyptMap.module.css";
 
 import Map from "../Map/Map.jsx";
-
+import { t } from "i18next";
+import ThemeContextProvider from "../../contexts/ThemeContext";
+import GovernorateContextProvider from "../../contexts/GovernorateContext";
+import LanguageContextProvider from "../../contexts/LanguageContext";
 const EgyptMap = (props) => {
   const [Height, setHeight] = useState(0);
   const [mapSize, setMapSize] = useState(600);
@@ -18,7 +21,7 @@ const EgyptMap = (props) => {
   });
 
   useEffect(() => {
-    setHeight(window.innerHeight - 73);
+    setHeight(window.innerHeight - 76);
   }, []);
 
   return (
@@ -27,15 +30,20 @@ const EgyptMap = (props) => {
       style={{ height: Height < mapSize ? `${Height - 10}px` : `${Height}px` }}
     >
       <div className={css.side_text}>
-        <h1>Welcome To Egypt</h1>
-        <p>The Ancient Sezilization in the middle east</p>
+        <h1>{t("Map_section.welcome_message")}</h1>
+        <p>{t("Map_section.brief")}</p>
       </div>
       <div className={css.map_container}>
-        <Map
-          map_size={mapSize}
-          sectionHeight={Height}
-          governorates={props.governorates}
-        />
+        <ThemeContextProvider>
+          <LanguageContextProvider>
+            <GovernorateContextProvider>
+              <Map
+                map_size={mapSize}
+                sectionHeight={Height}
+              />
+            </GovernorateContextProvider>
+          </LanguageContextProvider>
+        </ThemeContextProvider>
       </div>
     </section>
   );

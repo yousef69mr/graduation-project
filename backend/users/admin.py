@@ -4,35 +4,38 @@ from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
 
+
 class allUsersAdmin(UserAdmin):
     model = User
-    ordering =['id']
-    list_display= ['id','username','email','phone','gender','last_login','is_active','is_verified']
-    list_display_links= []
-    #list_editable =['gender']
-    search_fields=['phone','username','email']
-    list_filter = ['gender','last_login','is_active','is_verified']
+    ordering = ['id']
+    list_display = ['id', 'username', 'email', 'phone',
+                    'gender', 'last_login', 'is_active', 'is_verified']
+    list_display_links = []
+    # list_editable =['gender']
+    search_fields = ['phone', 'username', 'email']
+    list_filter = ['gender', 'last_login', 'is_active', 'is_verified']
 
     fieldsets = [
 
-        ('Authentication Info',{
-            'classes':('wide',),
-            'fields':('username','email','password')
+        ('Authentication Info', {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password')
         }),
-        ('Personal info',{
-            'classes':('wide',),
-            'fields':('profile_image','full_name','first_name','last_name','gender')
+        ('Personal info', {
+            'classes': ('wide',),
+            'fields': ('profile_image', 'nationality', 'gender')
         }),
-        ('Contact info',{
-            'classes':('wide',),
-            'fields':('phone',)
+        ('Contact info', {
+            'classes': ('wide',),
+            'fields': ('phone',)
         }),
-        ('Permissions',{
-            'classes':('wide',),
-            'fields':('is_active','is_staff','is_superuser','is_verified')
+        ('Permissions', {
+            'classes': ('wide',),
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'is_verified')
         }),
-        
-       
+
+
     ]
 
-admin.site.register(User,allUsersAdmin)
+
+admin.site.register(User, allUsersAdmin)

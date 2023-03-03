@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./home.css";
+import css from "./home.module.css";
 import video2 from "../../assets/video/ThisisEgypt.mp4";
 import { GrLocation } from "react-icons/gr";
 import { HiFilter } from "react-icons/hi";
@@ -18,59 +18,62 @@ const Home = () => {
   }, []);
 
   return (
-    <section className="home">
-      <div className="overlay"></div>
+    <section className={css.home}>
+      <div className={css.overlay}></div>
       <video src={video2} muted loop={true} autoPlay type="video/mp4"></video>
 
-      <div className="homeContent container">
-        <div className="textDiv">
-          <span data-aos="fade-up" className="smallText">
+      <div className={`${css.homeContent} container`}>
+        <div className={css.textDiv}>
+          <span data-aos="fade-up" className={css.smallText}>
             Our Packages
           </span>
-          <h1 data-aos="fade-up" className="homeTitle">
+          <h1 data-aos="fade-up" className={css.homeTitle}>
             Search your Holiday
           </h1>
         </div>
 
-        <div data-aos="fade-up" className="cardDiv grid">
-          <div className="destinationInput">
+        <div data-aos="fade-up" className={`${css.cardDiv} grid`}>
+          <div className={css.destinationInput}>
             <label htmlFor="city">Search your destination</label>
-            <div className="input flex">
+            <div className={`${css.input} flex`}>
               <input type="text" placeholder="Enter your City here" />
-              <GrLocation className="icon" />
+              <GrLocation className={css.icon} />
             </div>
           </div>
-          <div className="dateInput">
+          <div className={css.dateInput}>
             <label htmlFor="date">Select your Date :</label>
-            <div className="input flex">
+            <div className={`${css.input} flex`}>
               <input type="date" />
             </div>
           </div>
-          <div className="priceInput">
-            <div className="label_total flex">
+          <div className={css.priceInput}>
+            <div className={`${css.label_total} flex`}>
               <label htmlFor="price">Max price : </label>
-              <h3 className="total">
+              <h3 className={css.total}>
                 &nbsp;$<em>5000</em>
               </h3>
             </div>
-            <div className="input flex">
+            <div className={`${css.input} flex`}>
               <input type="range" max="5000" min="100" />
             </div>
           </div>
-          <div className="searchOptions flex">
-            <HiFilter className="icon" />
+          <div className={`${css.searchOptions} flex`}>
+            <HiFilter className={css.icon} />
             <span>More Filters</span>
           </div>
         </div>
-        <div data-aos="fade-up" className="homeFooterIcons flex">
-          <div className="rightIcons">
-            <FiFacebook className="icon" />
-            <AiOutlineInstagram className="icon" />
-            <FaTripadvisor className="icon" />
+        <div
+          data-aos="fade-up"
+          className={`${css.homeFooterIcons} flex`}
+        >
+          <div className={css.rightIcons}>
+            <FiFacebook className={css.icon} />
+            <AiOutlineInstagram className={css.icon} />
+            <FaTripadvisor className={css.icon} />
           </div>
-          <div className="leftIcons">
-            <BsListTask className="icon" />
-            <TbApps className="icon" />
+          <div className={css.leftIcons}>
+            <BsListTask className={css.icon} />
+            <TbApps className={css.icon} />
           </div>
         </div>
       </div>

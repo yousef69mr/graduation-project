@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./footer.css";
+import css from "./footer.module.css";
 import video from "../../assets/video/This_is_Egypt.mp4";
 import { FiChevronRight, FiSend } from "react-icons/fi";
 import { MdOutlineTravelExplore } from "react-icons/md";
@@ -12,6 +12,7 @@ import { FaTripadvisor } from "react-icons/fa";
 
 import aos from "aos";
 import "aos/dist/aos.css";
+import { t } from "i18next";
 
 const Footer = () => {
   useEffect(() => {
@@ -19,40 +20,44 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="footer">
-      <div className="videoDiv">
+    <footer className={css.footer}>
+      <div className={css.videoDiv}>
         <video src={video} loop autoPlay muted type="video/mp4"></video>
       </div>
 
-      <div className="secContent container">
-        <div className="contactDiv flex">
-          <div data-aos="fade-up" className="text">
-            <small>Keep in touch</small>
-            <h2>Travel with us</h2>
+      <div className={`${css.secContent} container`}>
+        <div className={`${css.contactDiv} flex`}>
+          <div data-aos="fade-up" className={css.text}>
+            <small>{t("footer.title")}</small>
+            <h2>{t("footer.subTitle")}</h2>
           </div>
 
-          <div className="inputDiv flex">
+          <div className={`${css.inputDiv} flex`}>
             <input
               data-aos="fade-up"
               type="text"
-              placeholder="Enter Email Address"
+              placeholder={t("footer.emailPlaceholder")}
             />
-            <button data-aos="fade-up" className="btn flex" type="submit">
-              Send <FiSend className="icon" />
+            <button
+              data-aos="fade-up"
+              className={`btn ${css.btn} flex`}
+              type="submit"
+            >
+              {t("footer.send")} <FiSend className={`icon ${css.icon}`} />
             </button>
           </div>
         </div>
 
-        <div className="footerCard flex">
-          <div className="footerIntro flex">
-            <div className="logoDiv">
-              <a href="#" className="logo flex">
+        <div className={`${css.footerCard} flex`}>
+          <div className={`${css.footerIntro} flex`}>
+            <div className={css.logoDiv}>
+              <a href="#" className={`${css.logo} flex`}>
                 <MdOutlineTravelExplore className="icon" />
-                Travel
+                {t("app_title")}
               </a>
             </div>
 
-            <div data-aos="fade-up" className="footerParagraph">
+            <div data-aos="fade-up" className={css.footerParagraph}>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Similique numquam, voluptates iste possimus nemo nihil soluta
@@ -61,40 +66,40 @@ const Footer = () => {
               </p>
             </div>
 
-            <div data-aos="fade-up" className="footerSocials">
-              <AiOutlineTwitter className="icon" />
-              <AiFillYoutube className="icon" />
-              <AiFillInstagram className="icon" />
-              <FaTripadvisor className="icon" />
+            <div data-aos="fade-up" className={css.footerSocials}>
+              <AiOutlineTwitter className={`icon ${css.icon}`} />
+              <AiFillYoutube className={`icon ${css.icon}`} />
+              <AiFillInstagram className={`icon ${css.icon}`} />
+              <FaTripadvisor className={`icon ${css.icon}`} />
             </div>
           </div>
 
-          <div className="footerLinks grid">
+          <div className={`${css.footerLinks} grid`}>
             {/* link Group 1 */}
             <div
               data-aos="fade-up"
               data-aos-duration="3000"
-              className="linkGroup"
+              className={css.linkGroup}
             >
-              <span className="groupTitle">Our Agency</span>
+              <span className={css.groupTitle}>Our Agency</span>
 
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Services
               </li>
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Insurance
               </li>
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Agency
               </li>
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Tourism
               </li>
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Payment
               </li>
@@ -104,27 +109,27 @@ const Footer = () => {
             <div
               data-aos="fade-up"
               data-aos-duration="4000"
-              className="linkGroup"
+              className={css.linkGroup}
             >
-              <span className="groupTitle">Partners</span>
+              <span className={css.groupTitle}>Partners</span>
 
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Bookings
               </li>
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 HostelWorld
               </li>
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Trivago
               </li>
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Rentcars
               </li>
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 TripAdvisor
               </li>
@@ -134,36 +139,36 @@ const Footer = () => {
             <div
               data-aos="fade-up"
               data-aos-duration="5000"
-              className="linkGroup"
+              className={css.linkGroup}
             >
-              <span className="groupTitle">Last Minute</span>
+              <span className={css.groupTitle}>Last Minute</span>
 
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Sharm ElSheikh
               </li>
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Luxor
               </li>
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Cairo
               </li>
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Fayoum
               </li>
-              <li className="footerList flex">
+              <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Marsa Matrouh
               </li>
             </div>
           </div>
 
-          <div className="footerDiv flex">
-            <small>Tourisco</small>
-            <small>copyrights reserved - &#169; 2023</small>
+          <div className={`${css.footerDiv} flex`}>
+            <small>{t("app_title")}</small>
+            <small>{t("footer.copyRights")}</small>
           </div>
         </div>
       </div>

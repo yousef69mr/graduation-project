@@ -1,20 +1,13 @@
 
 from rest_framework import viewsets, permissions, views, status
-# from rest_framework.generics import RetrieveUpdateDestroyAPIView
+
+
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
-from .serializers import UserSerializer, LanguageSerializer, GovernoratesSerializer
-from users.models import User
-from system.models import Language, GovernorateLanguageBased
+from .serializers import LanguageSerializer, GovernoratesSerializer, LandmarksSerializer, TicketsSerializer
+from system.models import Language, GovernorateLanguageBased, LandmarkLanguageBased, TicketLanguageBased
 # Create your views here.
-
-
-class UsersView(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class LanguageView(viewsets.ModelViewSet):
@@ -43,6 +36,54 @@ class GovernoratesView(views.APIView):
 
     def post(self, request, format=None):
         serializer = GovernoratesSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LandmarksView(views.APIView):
+    # queryset = LandmarkLanguageBased.objects.all()
+    # serializer_class = LandmarksSerializer
+    lookup_field = 'lang_code'
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get(self, request, lang_code, format=None):
+
+        language = get_object_or_404(Language, code=lang_code)
+
+        landmarks = LandmarkLanguageBased.objects.all().filter(lang=language)
+        # print(governorates)
+        serializer = LandmarksSerializer(landmarks, many=True)
+
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = LandmarksSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TicketsView(views.APIView):
+    # queryset = LandmarkLanguageBased.objects.all()
+    # serializer_class = LandmarksSerializer
+    lookup_field = 'lang_code'
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get(self, request, lang_code, format=None):
+
+        language = get_object_or_404(Language, code=lang_code)
+
+        tickets = TicketLanguageBased.objects.all().filter(lang=language)
+        # print(governorates)
+        serializer = TicketsSerializer(tickets, many=True)
+
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = TicketsSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

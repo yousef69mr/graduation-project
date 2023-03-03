@@ -1,13 +1,94 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.light {
+  --textColor: #000000;
+  --greyText: rgb(190, 198, 190);
+  --inputColor: rgb(239, 239, 239);
+  --bodyColor: rgb(240, 240, 246);
+  --dimeBodyColor: rgb(240, 240, 246);
+  --cardBG: rgb(225, 225, 235);
+
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackcolor: hsl(201, 33%, 16%);
+  --whiteColorDeam: hsl(0, 0%, 93%);
+  --greyText: rgb(190, 198, 190);
+  --cardHover: #fff;
+}
+
+.dark {
+  --textColor: #e2e2e4;
+  --greyText: rgb(190, 198, 190);
+  --inputColor: rgb(239, 239, 239);
+  --bodyColor: #24243d;
+  --dimeBodyColor: #24243d7e;
+  --cardBG: rgb(102, 102, 111);
+
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackcolor: hsl(201, 33%, 16%);
+  --whiteColorDeam: hsl(0, 0%, 93%);
+  --greyText: rgb(190, 198, 190);
+  --cardHover: #d3d0d0;
+}
+
+.blue {
+  --PrimaryColor: hsl(199, 100%, 33%);
+  --SecondaryColor: hsl(187, 85%, 43%);
+  --gradientColor: linear-gradient(
+    to right,
+    hsl(187, 85%, 43%),
+    hsl(199, 100%, 33%)
+  );
+  --overlay: rgb(47, 106, 127);
+  --overlay2: rgba(10, 84, 107, 0.307);
+  transition: all 1s ease-in-out;
+}
+
+.green {
+  --PrimaryColor: hsl(134, 100%, 33%);
+  --SecondaryColor: hsl(93, 85%, 43%);
+  --gradientColor: linear-gradient(
+    to right,
+    hsl(93, 85%, 43%),
+    hsl(134, 100%, 33%)
+  );
+  --overlay: rgb(81, 127, 47);
+  --overlay2: rgb(52, 105, 14);
+  transition: all 1s ease-in-out;
+}
+.red {
+  --PrimaryColor: hsl(359, 100%, 33%);
+  --SecondaryColor: hsl(347, 85%, 46%);
+  --gradientColor: linear-gradient(
+    to right,
+    hsl(347, 85%, 46%),
+    hsl(359, 100%, 33%)
+  );
+  --overlay: rgb(127, 47, 55);
+  --overlay2:rgb(106, 16, 25);
+  transition: all 1s ease-in-out;
+}
+
+.yellow {
+  --PrimaryColor: hsl(45, 100%, 50%);
+  --SecondaryColor: hsl(59, 79%, 45%);
+  --gradientColor: linear-gradient(
+    to right,
+    hsl(59, 79%, 45%),
+    hsl(45, 100%, 50%)
+  );
+  --overlay: hsl(45, 96%, 42%);
+  --overlay2: hsl(45, 98%, 34%);
+  transition: all 1s ease-in-out;
 }

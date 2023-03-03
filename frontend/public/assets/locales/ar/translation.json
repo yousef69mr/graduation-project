@@ -1,0 +1,90 @@
+{
+  "app_title": "توريسكو",
+  "language": "اللغة",
+  "welcome_message": "اهلا بكم",
+  "navbar": {
+    "search": "البحث",
+    "title": "توريسكو",
+    "login": "تسجيل دخول",
+    "home": "الصفحة الرئيسية",
+    "governorates": "المحافظات",
+    "recomendations": "صمم رحلة",
+    "aboutus": "معلومات عنا",
+    "contact": "تواصل معنا",
+    "landmarks": "معالم سياحية"
+  },
+  "Map_section": {
+    "welcome_message": " أهلا بكم فى مصر",
+    "brief": "أقدم و أعرق حضارة فى الشرق الاوسط"
+  },
+  "footer": {
+    "send": "إرسال",
+    "emailPlaceholder": "أدخل بريدك الإلكترونى",
+    "title": "إبق على اتصال",
+    "subTitle": "سافر معنا",
+    "copyRights": "جميع الحقوق محفوظة - 2023© "
+  },
+  "gender": [
+    { "key": "امرأة", "value": "female" },
+    { "key": "رجل", "value": "male" }
+  ],
+  "landmark_section": { "title": "الأماكن الأكثر زيارة" },
+  "signupform": {
+    "title": "إنشاء حساب",
+    "inputs": [
+      {
+        "placeholder": "اسم المستخدم",
+        "errorMessage": "يجب أن يتكون المستخدم من 3 إلى 16 حرفًا ويجب ألا يحتوي على أي أحرف خاصة",
+        "label": "اسم المستخدم"
+      },
+      {
+        "placeholder": "بريد الكترونى",
+        "errorMessage": "يجب أن يكون عنوان بريد إلكتروني صالح",
+        "label": "بريد الكترونى "
+      },
+      {
+        "placeholder": "كلمة المرور",
+        "errorMessage": "كلمة السر غير صالحة",
+        "label": "كلمة المرور"
+      },
+      {
+        "placeholder": "تأكيد كلمة المرور",
+        "errorMessage": "كلمات المرور غير متطابقة",
+        "label": "تأكيد كلمة المرور"
+      },
+      {
+        "placeholder": "الجنسية",
+        "errorMessage": "كود الدولة يجب ان يكون متكون من حرفين فقط",
+        "label": "الجنسية"
+      },
+      {
+        "header": "أدخل نوع المستخدم",
+        "errorMessage": "من فضلك  قم بالإخنيار",
+        "label": "نوع المستخدم"
+      },
+      {
+        "placeholder": "رقم الهاتف المحمول",
+        "errorMessage": "يجب أن يكون رقم الهاتف بتنسيق e164",
+        "label": "رقم الهاتف المحمول"
+      }
+    ],
+    "submit": "إنشاء"
+  },
+  "signinform": {
+    "title": "تسجيل دخول",
+    "inputs": [
+      {
+        "placeholder": "بريد الكترونى",
+        "errorMessage": "بريد الكترونى غير صالح",
+        "label": "بريد الكترونى او الكود"
+      },
+      {
+        "placeholder": "كلمة المرور",
+        "errorMessage": "كلمة السر غير صحيحة",
+        "label": "كلمة المرور"
+      }
+    ],
+    "forgetPassword": "هل نسيت كلمة المرور ؟",
+    "login": "تسجيل دخول"
+  }
+}

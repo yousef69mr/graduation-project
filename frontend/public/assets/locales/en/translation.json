@@ -1,0 +1,89 @@
+{
+  "app_title": "Tourisco",
+  "language": "Language",
+  "navbar": {
+    "search": "search",
+    "title": "Tourisco",
+    "login": "Login",
+    "home": "Home",
+    "governorates": "Governorates",
+    "recomendations": "Customize Tour",
+    "aboutus": "About Us",
+    "contact": "Contact",
+    "landmarks": "Landmarks"
+  },
+  "Map_section": {
+    "welcome_message": "Welcome To Egypt",
+    "brief": "The Ancient Sezilization in the middle east"
+  },
+  "footer": {
+    "send": "send",
+    "emailPlaceholder": "Enter your Email Address",
+    "title": "Keep in touch",
+    "subTitle": "Travel with us",
+    "copyRights": "copyrights reserved - ©2023"
+  },
+  "gender": [
+    { "key": "male", "value": "male" },
+    { "key": "female", "value": "female" }
+  ],
+  "landmark_section": { "title": "Most visited destination" },
+  "signupform": {
+    "title": "Create User",
+    "inputs": [
+      {
+        "placeholder": "Username",
+        "errorMessage": "User should be 3-16 characters and shouldn't include any special characters",
+        "label": "Username"
+      },
+      {
+        "placeholder": "Email Address",
+        "errorMessage": "It should be a valid email address",
+        "label": "email"
+      },
+      {
+        "placeholder": "Password",
+        "errorMessage": "It should be a valid password",
+        "label": "Password"
+      },
+      {
+        "placeholder": "Confirm Password",
+        "errorMessage": "Passwords don't match",
+        "label": "Confirm Password"
+      },
+      {
+        "placeholder": "Nationality",
+        "errorMessage": "Country code should be 2 characters",
+        "label": "nationality"
+      },
+      {
+        "header": "Select Gender",
+        "errorMessage": "It should be a valid gender",
+        "label": "gender"
+      },
+      {
+        "placeholder": "Phone Number",
+        "errorMessage": "phone number must be in e164 format",
+        "label": "phone number"
+      }
+    ],
+    "submit": "Create"
+  },
+  "signinform": {
+    "title": "Sign In",
+    "inputs": [
+      {
+        "placeholder": "Email Address",
+        "errorMessage": "It should be a valid email address",
+        "label": "email or code"
+      },
+      {
+        "placeholder": "Password",
+        "errorMessage": "Incorrect password",
+        "label": "password"
+      }
+    ],
+    "forgetPassword": "Do you forget your password ?",
+    "login": "Login"
+  }
+}

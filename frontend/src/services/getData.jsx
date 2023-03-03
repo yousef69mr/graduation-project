@@ -1,18 +1,18 @@
-var data = [];
 
-async function getData(url) {
-  try {
-    const response = await fetch(url);
-    const json = await response.json();
-    
-    for (var i = 0; i < json.length; i++) {
-      data.push(json[i]);
-    }
-    return data;
-
-  } catch (error) {
-    console.log("error", error);
-  }
-}
+const getData = (url) => {
+  return fetch(url, {
+    method: "GET",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      return data;
+    });
+};
 
 export default getData;

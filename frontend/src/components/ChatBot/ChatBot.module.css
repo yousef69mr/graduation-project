@@ -1,0 +1,19 @@
+.main {
+  position: fixed;
+  left: 3rem;
+  bottom: 2rem;
+  z-index: 9000;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  color: var(--whiteColor);
+  background: var(--gradientColor);
+  border-radius: 50%;
+  padding: 0.6rem;
+}

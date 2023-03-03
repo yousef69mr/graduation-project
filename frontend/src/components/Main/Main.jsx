@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import "./main.css";
+import css from "./main.module.css";
+import { t } from "i18next";
 
 import {
   HiOutlineClipboardCheck,
@@ -17,45 +18,45 @@ const Main = (props) => {
   }, []);
 
   return (
-    <section className="main section container">
-      <div className="secTitle">
-        <h3 data-aos="fade-right" className="title">
-          Most visited destination
+    <section className={`${css.main} section container`}>
+      <div className={css.secTitle}>
+        <h3 data-aos="fade-right" className={css.title}>
+          {t("landmark_section.title")}
         </h3>
       </div>
-      <div className="secContent grid">
+      <div className={`${css.secContent} grid`}>
         {Data?.map((destination) => {
           return (
             <div
               data-aos="fade-up"
               key={destination.id}
-              className="singleDestination"
+              className={css.singleDestination}
             >
-              <div className="imageDiv">
+              <div className={css.imageDiv}>
                 <img src={destination.image} alt={destination.title} />
               </div>
-              <div className="cardInfo">
-                <h4 className="destTitle">{destination.title}</h4>
-                <span className="continent flex">
-                  <HiOutlineLocationMarker className="icon" />
-                  <span className="name">{destination.location}</span>
+              <div className={css.cardInfo}>
+                <h4 className={css.destTitle}>{destination.title}</h4>
+                <span className={`${css.continent} flex`}>
+                  <HiOutlineLocationMarker className={css.icon} />
+                  <span className={css.name}>{destination.location}</span>
                 </span>
-                <div className="fees flex">
-                  <div className="grade">
+                <div className={`${css.fees} flex`}>
+                  <div className={css.grade}>
                     <span>
                       {destination.grade}
                       <small>+1</small>
                     </span>
                   </div>
-                  <div className="price">
+                  <div className={css.price}>
                     <h5>{destination.fees}</h5>
                   </div>
                 </div>
-                <div className="description">
+                <div className={css.description}>
                   <p>{destination.description}</p>
                 </div>
                 <button className="btn flex">
-                  Details <HiOutlineClipboardCheck className="icon" />
+                  Details <HiOutlineClipboardCheck className={css.icon} />
                 </button>
               </div>
             </div>

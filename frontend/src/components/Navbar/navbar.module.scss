@@ -1,0 +1,171 @@
+.navBarSection {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    .header {
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--dimeBodyColor);
+        width: 100%;
+        padding: 1rem;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(2, 15, 29, 0.2);
+
+        .logo {
+            color: var(--PrimaryColor);
+            font-weight: 600;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+
+            .icon {
+                font-size: 25px;
+                color: var(--PrimaryColor);
+                transform: translateY(5px);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .navBar {
+                position: absolute;
+                background: var(--bodyColor);
+                height: max-content;
+                width: 80%;
+                border-radius: 1rem;
+                top: -50rem;
+                left: 50%;
+                padding: 1rem;
+                transform: translate(-50%);
+                z-index: 2000;
+                box-shadow: 0 2px 4px rgba(2, 15, 29, 0.904);
+                transition: 0.4s ease-in-out;
+
+                .navLists {
+                    flex-direction: column;
+                    justify-content: center;
+                    width: 100%;
+                    margin: auto;
+                    padding: 0.5rem 0;
+
+                    .navItem {
+                        padding: 0.5rem 0;
+
+                        .navLink {
+                            color: var(--textColor);
+                            font-size: 0.9rem;
+                            font-weight: 600;
+
+                            &:hover {
+                                color: var(--PrimaryColor);
+                            }
+                        }
+                    }
+
+                    .btn {
+                        margin-top: 1rem;
+
+                        a {
+                            font-weight: 600;
+                            color: var(--whiteColor);
+                        }
+                    }
+                }
+
+                .closeNavbar {
+                    position: absolute;
+                    top: 1rem;
+                    right: 1.5rem;
+                    color: var(--PrimaryColor);
+
+                    &:hover {
+                        color: var(--SecondaryColor);
+                    }
+                }
+            }
+
+            .activeNavbar {
+                top: 6rem;
+            }
+        }
+
+        .toggleNavbar {
+            .icon {
+                cursor: pointer;
+                font-size: 25px;
+                color: var(--PrimaryColor);
+            }
+
+            &:hover .icon {
+                color: var(--SecondaryColor);
+            }
+        }
+    }
+}
+
+.navBarSection + * {
+    margin-top: 100px;
+}
+//Media Queries
+
+@media screen and(min-width:769px) {
+    .toggleNavbar,
+    .closeNavbar {
+        display: none;
+    }
+
+    .header {
+        padding: 1.5rem 2rem;
+
+        .navBar {
+            .navLists {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: row;
+
+                .navItem {
+                    .navLink {
+                        color: var(--textColor);
+                        padding: 0 0.45rem;
+                        font-size: 0.9rem;
+                        font-weight: 500;
+
+                        &:hover {
+                            color: var(--PrimaryColor);
+                        }
+                    }
+                }
+
+                .btn {
+                    margin-left: 1rem;
+
+                    a {
+                        color: var(--whiteColor);
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and(min-width:960px) {
+    .header {
+        .navBar {
+            .navLists {
+                .navItem {
+                    padding: 0 0.7rem;
+                }
+            }
+        }
+    }
+}
+
+@media screen and(min-width:1240px) {
+    .header {
+        padding: 1rem 0.5rem;
+    }
+}
