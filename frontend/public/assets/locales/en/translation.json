@@ -5,6 +5,7 @@
     "search": "search",
     "title": "Tourisco",
     "login": "Login",
+    "logout": "Logout",
     "home": "Home",
     "governorates": "Governorates",
     "recomendations": "Customize Tour",
@@ -28,6 +29,19 @@
     { "key": "female", "value": "female" }
   ],
   "landmark_section": { "title": "Most visited destination" },
+
+  "LoginSignupSlider": {
+    "left_overlay": {
+      "title": "Welcome back!",
+      "message": "To keep connected with us please login with your personal info",
+      "button": "Sign In"
+    },
+    "right_overlay": {
+      "title": "Hello, friend",
+      "message": "Enter your personal details and start journey with us",
+      "button": "Sign Up"
+    }
+  },
   "signupform": {
     "title": "Create User",
     "inputs": [
@@ -64,7 +78,12 @@
       {
         "placeholder": "Phone Number",
         "errorMessage": "phone number must be in e164 format",
-        "label": "phone number"
+        "label": "phone number",
+        "subInput": {
+          "header": "Select CountryCode ",
+          "errorMessage": "It should be a valid Code",
+          "label": "CountryCode"
+        }
       }
     ],
     "submit": "Create"

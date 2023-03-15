@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { lazy, useContext, useEffect, useState } from "react";
 import css from "./navbar.module.css";
 import { MdOutlineTravelExplore } from "react-icons/md";
 import { AiFillCloseCircle, AiOutlineSetting } from "react-icons/ai";
 import { TbGridDots } from "react-icons/tb";
-import SettingDropDown from "../../services/SettingDropDownList";
+import { BiLogOut } from "react-icons/bi";
+import SettingDropDown from "../../utils/SettingDropDownList";
 
 import { t } from "i18next";
 
@@ -11,22 +12,18 @@ import "flag-icons/css/flag-icons.min.css";
 import { Link } from "react-router-dom";
 import LanguageContextProvider from "../../contexts/LanguageContext";
 import ThemeContextProvider from "../../contexts/ThemeContext";
+import { AuthContext } from "../../contexts/AuthContext";
+
+//dynamic import
+const AccountMenu = lazy(() => import("../../utils/AccountMenu"));
 
 const Navbar = (props) => {
-  const { activeUser } = props;
-  // const { theme, colorTheme, toggleTheme } = useContext(ThemeContext);
-  // // dark light mode
-  // // const [theme, setTheme] = useState("light");
-
-  // //color toggle mode
-  // // const [colortheme, setColorTheme] = useState("red");
-  // useEffect(() => {
-  //   document.body.className = `${colorTheme} ${theme}`;
-  // }, [theme, colorTheme]);
+  const { isAuthenticated, logoutUser, activeUser } = useContext(AuthContext);
+  const [authMenu, setAuthMenu] = useState();
 
   //open sidebar
   const [active, setActive] = useState(`${css.navBar}`);
-
+  const [toggle, setToggle] = useState(false);
   const showNav = () => {
     setActive(`${css.navBar} ${css.activeNavbar}`);
   };
@@ -35,30 +32,47 @@ const Navbar = (props) => {
     setActive(`${css.navBar}`);
   };
 
-  // // //change language
-  // const currentLanguageCode = cookies.get("i18next") || "en";
-  // const currentLanguage = languages.find((l) => l.code === currentLanguageCode);
+  const toggleNavbar = () => {
+    setToggle((prev) => !prev);
+  };
 
-  // useEffect(() => {
-  //   document.body.dir = currentLanguage?.dir || "ltr";
-  //   document.title = t("app_title");
-  // }, [currentLanguage, t]);
+  useEffect(() => {
+    if (toggle) {
+      showNav();
+    } else {
+      removeNav();
+    }
+  }, [toggle]);
 
-  // console.log(activeUser);
-  let menu;
-  if (activeUser?.name === "") {
-    menu = (
-      <button className="btn">
-        <Link to={"/logout"}>{t("navbar.logout")}</Link>
-      </button>
-    );
-  } else {
-    menu = (
-      <button className="btn">
-        <Link to={"/login_signup"}>{t("navbar.login")}</Link>
-      </button>
-    );
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      setAuthMenu(
+        <AccountMenu
+          activeUser={activeUser}
+          logoutButton={
+            <Link to={"/"} onClick={logoutUser}>
+              <button
+                className="btn"
+                style={{ width: "100%" }}
+                onClick={removeNav}
+              >
+                <BiLogOut className="icon" style={{ fontSize: "18px" }} />
+                {t("navbar.logout")}
+              </button>
+            </Link>
+          }
+        />
+      );
+    } else {
+      setAuthMenu(
+        <Link to={"/login_signup"}>
+          <button className="btn" onClick={removeNav}>
+            {t("navbar.login")}
+          </button>
+        </Link>
+      );
+    }
+  }, [isAuthenticated]);
 
   return (
     <section className={css.navBarSection}>
@@ -82,45 +96,45 @@ const Navbar = (props) => {
                 </LanguageContextProvider>
               </ThemeContextProvider>
             </li>
-            <li className={css.navItem}>
+            <li className={css.navItem} onClick={removeNav}>
               <Link to={"/"} className={css.navLink}>
                 {t("navbar.home")}
               </Link>
             </li>
-            <li className={css.navItem}>
+            <li className={css.navItem} onClick={removeNav}>
               <Link to={"#"} className={css.navLink}>
                 {t("navbar.governorates")}
               </Link>
             </li>
-            <li className={css.navItem}>
+            <li className={css.navItem} onClick={removeNav}>
               <Link to={"#"} className={css.navLink}>
                 {t("navbar.landmarks")}
               </Link>
             </li>
 
-            <li className={css.navItem}>
+            <li className={css.navItem} onClick={removeNav}>
               <Link to={"#"} className={css.navLink}>
                 {t("navbar.recomendations")}
               </Link>
             </li>
-            <li className={css.navItem}>
+            <li className={css.navItem} onClick={removeNav}>
               <Link to={"/aboutus"} className={css.navLink}>
                 {t("navbar.aboutus")}
               </Link>
             </li>
-            <li className={css.navItem}>
+            <li className={css.navItem} onClick={removeNav}>
               <Link to={"/contact"} className={css.navLink}>
                 {t("navbar.contact")}
               </Link>
             </li>
-            {menu}
+            {authMenu}
           </ul>
           <div onClick={removeNav} className={css.closeNavbar}>
             <AiFillCloseCircle className="icon" />
           </div>
         </nav>
         <div onClick={showNav} className={css.toggleNavbar}>
-          <TbGridDots className={css.icon} />
+          <TbGridDots className={css.icon} onClick={toggleNavbar} />
         </div>
       </header>
     </section>

@@ -1,4 +1,3 @@
-
 const getData = (url) => {
   return fetch(url, {
     method: "GET",
@@ -10,8 +9,12 @@ const getData = (url) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       return data;
+    })
+    .catch((err) => {
+      console.log(err);
+      return;
     });
 };
 

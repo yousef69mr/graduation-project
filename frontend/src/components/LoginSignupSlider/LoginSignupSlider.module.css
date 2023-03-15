@@ -51,19 +51,18 @@ a {
 }
 
 .btn {
-  color: var(--cardHover);
   background: var(--gradientColor);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   padding: 12px 55px;
   margin: 20px;
   border-radius: 20px;
   border: 1px solid var(--PrimaryColor);
-  outline: none;
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
   cursor: pointer;
+  color: var(--whiteColor);
 }
 
 #signIn,

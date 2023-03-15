@@ -11,8 +11,11 @@ const AlertContextProvider = (props) => {
 
   const AlertHandler = (actionType, payload) => {
     switch (actionType) {
-      case "":
+      case "UPDATE":
         setState({ message: payload.message, alertTheme: payload.alertTheme });
+        return;
+      case "RESET":
+        resetAlert()
         return;
       default:
         return state;

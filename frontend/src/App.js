@@ -16,13 +16,17 @@ import ChatBot from './components/ChatBot/ChatBot';
 
 import AlertContextProvider from './contexts/AlertContext';
 
-//dynamic import 
+
+//dynamic import
+const PrivateRoute = lazy(() => import('./utils/PrivateRoute'));
+const BlockedRoute = lazy(() => import('./utils/BlockedRoute'));
+const AuthContextProvider = lazy(() => import('./contexts/AuthContext'));
 const HomePage = lazy(() => import("./Pages/HomePage"));
 const LoginSignupPage = lazy(() => import('./Pages/LoginSignupPage'));
 const AboutusPage = lazy(() => import('./Pages/AboutusPage'));
 const DashboardPage = lazy(() => import('./Pages/DashboardPage'));
 const CustomizedSnackbar = lazy(() =>
-  import("./services/CustomizedSnackbar")
+  import("./utils/CustomizedSnackbar")
 );
 
 
@@ -55,13 +59,6 @@ const App = () => {
   }, []);
 
 
-  // useEffect(() => {
-  //   if (languageList != null) {
-  //     setLanguages(languageList)
-  //   }
-
-  //   // console.log(lang)
-  // }, [lang, languageList])
 
   useEffect(() => {
     setData(Data);
@@ -73,14 +70,27 @@ const App = () => {
       <ChatBot />
       <Router>
         <ScrollToTop smooth component={<RxDoubleArrowUp style={{ height: "2rem !important" }} />} style={{ zIndex: "9000", textAlign: 'center', backgroundColor: 'var(--SecondaryColor)', color: 'var(--whiteColor)', fontSize: 20 }} />
-
-        <Navbar activeUser={activeUser} />
-
+        <AuthContextProvider>
+          <Navbar />
+        </AuthContextProvider>
         <Routes>
           <Route exact path='/' element={<HomePage governorates={data.Governorates} landmarks={data.Landmarks} />} />
-          <Route path='/login_signup' element={!loggedIn ? <LoginSignupPage setIsPotentialLogin={setIsPotentialLogin} activeUser={activeUser} /> : <Navigate to="/" replace />} />
+          <Route path='/login_signup' element={
+            <AuthContextProvider>
+              <BlockedRoute>
+                <LoginSignupPage setIsPotentialLogin={setIsPotentialLogin} activeUser={activeUser} />
+              </BlockedRoute>
+            </AuthContextProvider>
+          }
+          />
           <Route path='/aboutus' element={<AboutusPage />} />
-          <Route path='/dashboard' element={<DashboardPage activeUser={activeUser} />} />
+          <Route path='/dashboard' element={
+            <AuthContextProvider>
+              <PrivateRoute>
+                <DashboardPage />
+              </PrivateRoute>
+            </AuthContextProvider>
+          } />
           <Route
             path="*"
             element={<Navigate to="/" replace />}

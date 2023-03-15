@@ -8,7 +8,7 @@ import { FiFacebook } from "react-icons/fi";
 import { FaTripadvisor } from "react-icons/fa";
 import { TbApps } from "react-icons/tb";
 import { BsListTask } from "react-icons/bs";
-
+import { t } from "i18next";
 import aos from "aos";
 import "aos/dist/aos.css";
 
@@ -28,7 +28,7 @@ const Home = () => {
             Our Packages
           </span>
           <h1 data-aos="fade-up" className={css.homeTitle}>
-            Search your Holiday
+            {t("")}
           </h1>
         </div>
 
@@ -62,10 +62,7 @@ const Home = () => {
             <span>More Filters</span>
           </div>
         </div>
-        <div
-          data-aos="fade-up"
-          className={`${css.homeFooterIcons} flex`}
-        >
+        <div data-aos="fade-up" className={`${css.homeFooterIcons} flex`}>
           <div className={css.rightIcons}>
             <FiFacebook className={css.icon} />
             <AiOutlineInstagram className={css.icon} />

@@ -33,6 +33,10 @@ class allUsersAdmin(UserAdmin):
             'classes': ('wide',),
             'fields': ('is_active', 'is_staff', 'is_superuser', 'is_verified')
         }),
+        ('Important Dates', {
+            'classes': ('wide',),
+            'fields': ('date_joined', 'last_login')
+        }),
 
 
     ]

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 
-import getData from './services/getData';
+import getData from './utils/getData';
 
 import i18n from "i18next";
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -12,15 +12,16 @@ import { initReactI18next } from "react-i18next";
 
 // require('events').EventEmitter.prototype._maxListeners = 100;
 
-export const back_Host_url = "http://127.0.0.1:8000/api/";
+export const backendBaseURL = "http://127.0.0.1:8000/";
+export const backendAPI = backendBaseURL.concat("api/");
 
-const languagesPromise = getData(back_Host_url.concat('languages/'));
+const languagesPromise = getData(backendAPI.concat('languages/'));
 
 const LanguageHandler = async () => {
   let lang = await languagesPromise;
   // console.log(lang)
   //backup solution 
-  if (lang.length === 0) {
+  if (lang?.length === 0 || lang === undefined) {
 
     const cachedData = await import('./Data/data.json');
     // console.log(cachedData)

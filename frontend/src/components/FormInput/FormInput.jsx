@@ -2,6 +2,7 @@ import React, { Suspense, useState, useEffect } from "react";
 import css from "./FormInput.module.css";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CircularProgress } from "@mui/material";
+import createField from "../../utils/CreateInput";
 
 const FormInput = (props) => {
   const {
@@ -18,6 +19,8 @@ const FormInput = (props) => {
     required,
     errorMessage,
     onBlur,
+    width,
+    flex,
   } = props;
 
   const [focused, setFocused] = useState(false);
@@ -60,7 +63,10 @@ const FormInput = (props) => {
   };
   return (
     <Suspense>
-      <div className={css.formInput}>
+      <div
+        className={css.formInput}
+        style={{ flexGrow: flex, width: width }}
+      >
         <label>
           {label}
           {required ? <span>*</span> : ""}
@@ -99,6 +105,9 @@ const FormInput = (props) => {
         <h6>{loading ? <CircularProgress className={css.icon} /> : ""}</h6>
         <p>{errorMessage}</p>
       </div>
+      {/* {subInputs?.map((input, i) =>
+        createField(input, i, onChange, onBlur, subValues[i], data)
+      )} */}
     </Suspense>
   );
 };

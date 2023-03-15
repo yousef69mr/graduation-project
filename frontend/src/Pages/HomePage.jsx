@@ -1,8 +1,5 @@
 import React, { lazy, Suspense } from "react";
 import { CircularProgress } from "@mui/material";
-// import EgyptMap from "../components/EgyptMap/EgyptMap";
-// import Main from "../components/Main/Main";
-// import Home from "../components/Home/Home";
 
 //dynamic import
 const EgyptMap = lazy(() => import("../components/EgyptMap/EgyptMap"));
@@ -19,8 +16,8 @@ const HomePage = (props) => {
         <Home />
       </Suspense>
 
-      <Suspense fallback={<CircularProgress />}>
-        <Main landmarks={props.landmarks} thickness={4.3} />
+      <Suspense fallback={<CircularProgress thickness={4.3} />}>
+        <Main landmarks={props.landmarks} />
       </Suspense>
     </React.Fragment>
   );

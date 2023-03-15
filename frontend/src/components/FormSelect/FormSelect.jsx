@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { useState } from "react";
 import css from "./FormSelect.module.css";
+
 const FormSelect = (props) => {
   const {
     type,
@@ -15,6 +16,9 @@ const FormSelect = (props) => {
     options,
     required,
     errorMessage,
+    onBlur,
+    flex,
+    width,
   } = props;
   // alert(JSON.stringify(options));
   const [focused, setFocused] = useState(false);
@@ -23,37 +27,47 @@ const FormSelect = (props) => {
     setFocused(true);
   };
   return (
-    <div className={css.formInput}>
-      <label>
-        {label}
-        {required ? <span>*</span> : ""}
-      </label>
-      <select
-        ref={ref}
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        pattern={pattern}
-        required={required}
-        onBlur={handleFocus}
-        focused={focused.toString()}
+    <Suspense>
+      <div
+        className={css.formInput}
+        style={{ flexGrow: flex, flexShrink: flex, width: width }}
       >
-        <option value="">{header}</option>
-        {options && (
-          <optgroup label={label?.toUpperCase()}>
-            {options.map((option, i) => (
-              <option value={option.value} key={i}>
-                {option.key}
-              </option>
-            ))}
-          </optgroup>
-        )}
-      </select>
+        <label>
+          {label}
+          {required ? <span>*</span> : ""}
+        </label>
+        <select
+          ref={ref}
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          pattern={pattern}
+          required={required}
+          onBlur={handleFocus}
+          focused={focused.toString()}
+        >
+          <option value="" key={-1}>
+            {header}
+          </option>
+          {options && (
+            <optgroup label={label?.toUpperCase()}>
+              {options.map((option, i) => (
+                <option value={option.value} key={i}>
+                  {option.key}
+                </option>
+              ))}
+            </optgroup>
+          )}
+        </select>
 
-      <p>{errorMessage}</p>
-    </div>
+        <p>{errorMessage}</p>
+      </div>
+      {/* {subInputs?.map((input, i) =>
+        createField(input, i, onChange, onBlur, subValues[i], data)
+      )} */}
+    </Suspense>
   );
 };
 

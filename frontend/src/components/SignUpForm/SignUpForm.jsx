@@ -1,40 +1,22 @@
-import React, { useReducer, lazy, useEffect } from "react";
+import React, { useReducer, lazy, useEffect, useContext } from "react";
 import { FaFacebook, FaGoogle, FaTwitter } from "react-icons/fa";
 import css from "./SignUpForm.module.css";
 import { useNavigate, useHistory } from "react-router-dom";
 import { t } from "i18next";
 import FormInput from "../FormInput/FormInput";
 import FormSelect from "../FormSelect/FormSelect";
-import axiosInstance from "../../axios";
-// import axios from "axios";
-
+import InputContainer from "../InputContainer/InputContainer";
+import axios from "axios";
+import { backendAPI } from "../../index";
+import { AlertContext } from "../../contexts/AlertContext";
 
 const SignUpForm = (props) => {
-  // const history = useHistory();
-  const [requestState, updateRequestState] = useReducer(
-    (state, updates) => ({ ...state, ...updates }),
-    {
-      potientialUser: undefined,
-      success: null,
-      redirect: false,
-      message: "",
-    }
-  );
-
   const { data } = props;
+  const { AlertHandler } = useContext(AlertContext);
 
   const [state, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
-        case "SET_COUNTRY":
-          let country = data.countries?.find((n) => n.code === action.payload);
-          // alert(country?.code);
-          return {
-            ...state,
-            country: country,
-            nationality: action.payload,
-          };
-
         default:
           return {
             ...state,
@@ -47,8 +29,8 @@ const SignUpForm = (props) => {
       password: "",
       email: "",
       nationality: "",
-      country: "",
       phone: "",
+      phoneCode: "",
       gender: "",
     }
   );
@@ -60,6 +42,7 @@ const SignUpForm = (props) => {
       type: "text",
       name: "username",
       pattern: "^[a-zA-Z0-9]{3,16}$",
+      flex: 1,
       unique: false,
       required: true,
     },
@@ -69,6 +52,7 @@ const SignUpForm = (props) => {
       type: "email",
       name: "email",
       pattern: "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$",
+      flex: 1,
       unique: true,
       required: true,
     },
@@ -78,6 +62,7 @@ const SignUpForm = (props) => {
       type: "password",
       name: "password",
       pattern: "^[a-zA-Z0-9]{4,}$",
+      flex: 1,
       unique: false,
       required: true,
     },
@@ -87,6 +72,7 @@ const SignUpForm = (props) => {
       type: "password",
       name: "confirmPassword",
       pattern: state.password,
+      flex: 1,
       unique: false,
       required: true,
     },
@@ -95,7 +81,9 @@ const SignUpForm = (props) => {
       tag: "input",
       list: "country_list",
       name: "countries",
+      label: "nationality",
       pattern: "^[a-zA-Z]{2}$",
+      flex: 1,
       unique: false,
       required: true,
     },
@@ -104,6 +92,7 @@ const SignUpForm = (props) => {
       tag: "select",
       name: "gender",
       pattern: ".*\\S.*",
+      flex: 1,
       unique: false,
       required: true,
     },
@@ -112,9 +101,21 @@ const SignUpForm = (props) => {
       tag: "input",
       type: "tel",
       name: "phone",
-      pattern: "^\\+[1-9]\\d{1,14}$",
+      pattern: "^\\[1-9]\\d{1,12}$",
+      flex: 3,
+      width: "50%",
       unique: true,
       required: true,
+      subInput: {
+        id: 1,
+        tag: "select",
+        name: "phoneCode",
+        pattern: ".*\\S.*",
+        flex: 1,
+        width: "50%",
+        unique: false,
+        required: true,
+      },
     },
   ];
 
@@ -125,74 +126,37 @@ const SignUpForm = (props) => {
       username: state.username,
       email: state.email,
       password: state.password,
-      phone: `+${state.country.phone}${state.phone}`,
+      phone: `${state.phoneCode}${state.phone}`,
       nationality: state.nationality,
       gender: state.gender,
     };
-    // alert(JSON.stringify(user));
 
-    // alert(JSON.stringify(requestState));
-    axiosInstance.post(`register/`, user).then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      alert(JSON.stringify(requestState));
-      updateRequestState({
-        success: true,
-        redirect: true,
-        message: `User created successfully`,
-      });
-    });
-    // await fetch("http://127.0.0.1:8000/register", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(user),
-    // })
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error(`HTTP error! Status: ${response.status}`);
-    //     }
-
-    //     alert(JSON.stringify(requestState));
-    //     updateRequestState({
-    //       success: true,
-    //       redirect: true,
-    //       message: `User created successfully`,
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     updateRequestState({
-    //       success: false,
-    //       potientialUser: null,
-    //       message: error,
-    //     });
-    //     alert(JSON.stringify(requestState));
-    //   });
+    axios
+      .post(backendAPI.concat("createUser/"), user)
+      .then((response) => {
+        if (response.status === 201) {
+          console.log("created");
+          AlertHandler("UPDATE", {
+            message: "User Created Successfully :)",
+            alertTheme: "success",
+          });
+        }
+      })
+      .catch((err) => console.log(err));
   };
-  let navigate = useNavigate();
-  // useEffect(() => {
-  //   if (requestState.redirect) {
-  //     // alert("success");
-  //     return navigate("/login_signup");
-  //   }
-  // }, [requestState.redirect]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
+
     if (name === "countries") {
-      dispatch({
-        type: "SET_COUNTRY",
-        payload: value.toUpperCase().trim(),
-      });
+      dispatch({ nationality: value.toUpperCase().trim() });
     } else if (name === "phone") {
-      if (value.startsWith(`+${state.country.phone}`)) {
-        const modifiedValue = value.replace(`+${state.country.phone}`, "");
-        if (modifiedValue.startsWith("0")) {
-          modifiedValue = modifiedValue.split(1);
-        }
-        dispatch({ phone: modifiedValue });
+      let modifiedValue = value;
+
+      if (modifiedValue.startsWith("0")) {
+        modifiedValue = modifiedValue.slice(1);
       }
+      dispatch({ phone: modifiedValue });
     } else {
       dispatch({ [name]: value });
     }
@@ -208,6 +172,36 @@ const SignUpForm = (props) => {
     }
   };
 
+  const subInputsHandler = (input, index) => {
+    if (input.name === "phone") {
+      const options = data.countries?.map((value) =>
+        Object.assign({
+          key: `(+${value.phone}) ${value.label}`,
+          value: `+${value.phone}`,
+        })
+      );
+
+      // console.log(values, keys);
+      // console.log(options);
+      return (
+        <FormSelect
+          name={input.subInput.name}
+          value={state[input.subInput.name]}
+          onChange={onChange}
+          placeholder={t(`signupform.inputs.${index}.subInput.label`)}
+          label={t(`signupform.inputs.${index}.subInput.label`)}
+          pattern={input.subInput.pattern}
+          errorMessage={t(`signupform.inputs.${index}.subInput.errorMessage`)}
+          required={input.subInput.required}
+          header={t(`signupform.inputs.${index}.subInput.header`)}
+          options={options}
+          flex={input.subInput.flex}
+          key={input.subInput.id}
+          width={!input.width ? "100%" : input.subInput.width}
+        />
+      );
+    }
+  };
   return (
     <React.Fragment>
       <form method="post" onSubmit={SubmitHandler}>
@@ -227,48 +221,54 @@ const SignUpForm = (props) => {
         <p>or use your email for registeration</p>
         {inputs.map((input, i) =>
           input.tag === "input" ? (
-            <FormInput
-              type={input.type}
-              name={input.name}
-              value={
-                input.name === "phone"
-                  ? `+${state.country ? state.country.phone : ""}${state.phone}`
-                  : input.name === "countries"
-                  ? state[input.label]
-                  : state[input.name]
-              }
-              onChange={onChange}
-              placeholder={t(`signupform.inputs.${i}.placeholder`)}
-              label={t(`signupform.inputs.${i}.label`)}
-              pattern={input.pattern}
-              errorMessage={t(`signupform.inputs.${i}.errorMessage`)}
-              required={input.required}
-              list={input.list}
-              dataList={data[input.name]}
-              onBlur={() => onBlur(input.name)}
-              key={input.id}
-            />
+            <InputContainer key={i}>
+              {subInputsHandler(input, i)}
+              <FormInput
+                type={input.type}
+                name={input.name}
+                value={
+                  input.name === "countries"
+                    ? state[input.label]
+                    : state[input.name]
+                }
+                onChange={onChange}
+                placeholder={t(`signupform.inputs.${i}.placeholder`)}
+                label={t(`signupform.inputs.${i}.label`)}
+                pattern={input.pattern}
+                errorMessage={t(`signupform.inputs.${i}.errorMessage`)}
+                required={input.required}
+                list={input.list}
+                dataList={data[input.name]}
+                onBlur={() => onBlur(input.name)}
+                flex={input.flex}
+                key={input.id}
+                width={!input.width ? "100%" : input.width}
+              />
+            </InputContainer>
           ) : (
-            <FormSelect
-              name={input.name}
-              value={state[input.name]}
-              onChange={onChange}
-              placeholder={t(`signupform.inputs.${i}.label`)}
-              label={t(`signupform.inputs.${i}.label`)}
-              pattern={input.pattern}
-              errorMessage={t(`signupform.inputs.${i}.errorMessage`)}
-              required={input.required}
-              header={t(`signupform.inputs.${i}.header`)}
-              options={data[input.name]}
-              key={input.id}
-            />
+            <InputContainer key={i}>
+              <FormSelect
+                name={input.name}
+                value={state[input.name]}
+                onChange={onChange}
+                placeholder={t(`signupform.inputs.${i}.label`)}
+                label={t(`signupform.inputs.${i}.label`)}
+                pattern={input.pattern}
+                errorMessage={t(`signupform.inputs.${i}.errorMessage`)}
+                required={input.required}
+                header={t(`signupform.inputs.${i}.header`)}
+                options={data[input.name]}
+                flex={input.flex}
+                key={input.id}
+                width={!input.width ? "100%" : input.width}
+              />
+            </InputContainer>
           )
         )}
         <button className={props.btn} type="submit">
           {t("signupform.submit")}
         </button>
       </form>
-      
     </React.Fragment>
   );
 };

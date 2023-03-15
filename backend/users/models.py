@@ -21,7 +21,6 @@ class CustomAccountManager(BaseUserManager):
     def create_superuser(self, username, email, phone, password, **other_fields):
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', True)
-        other_fields.setdefault('is_active', True)
         other_fields.setdefault('is_verified', True)
         other_fields.setdefault('gender', 'male')
         other_fields.setdefault('nationality', 'EG')
@@ -39,6 +38,7 @@ class CustomAccountManager(BaseUserManager):
         return self.create_user(username, email, phone, password, **other_fields)
 
     def create_user(self, username, email, phone, password, **other_fields):
+        other_fields.setdefault('is_active', True)
         if not email:
             raise ValueError(_('You must provide an email address.'))
 
@@ -79,6 +79,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')
     date_joined = models.DateTimeField(
         default=timezone.now, verbose_name='Date joined')
+    last_login = models.DateTimeField(
+        blank=True, null=True, verbose_name='last login')
     is_verified = models.BooleanField(
         default=False, help_text='Designates whether the user verified his account or not.', verbose_name="Email Verified")
 
@@ -152,6 +154,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def set_email(self, email):
         self.email = email
+
+    def set_is_active(self, value):
+        self.is_active = value
 
     def set_visible_password(self, password):
         self.raw_password = password
