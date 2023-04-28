@@ -12,6 +12,17 @@ import { initReactI18next } from "react-i18next";
 
 // require('events').EventEmitter.prototype._maxListeners = 100;
 
+//translation for api calls
+// import { setConfig } from 'react-google-translate'
+
+// setConfig({
+//   clientEmail: process.env.REACT_APP_GCP_CLIENT_EMAIL ?? '',
+//   privateKey: process.env.REACT_APP_GCP_PRIVATE_KEY ?? '',
+//   projectId: process.env.REACT_APP_GCP_PROJECT_ID ?? ''
+// })
+
+// console.log(process.env.REACT_APP_GCP_CLIENT_EMAIL, process.env.REACT_APP_GCP_PRIVATE_KEY, process.env.REACT_APP_GCP_PROJECT_ID)
+
 export const backendBaseURL = "http://127.0.0.1:8000/";
 export const backendAPI = backendBaseURL.concat("api/");
 
@@ -19,7 +30,7 @@ const languagesPromise = getData(backendAPI.concat('languages/'));
 
 const LanguageHandler = async () => {
   let lang = await languagesPromise;
-  // console.log(lang)
+
   //backup solution 
   if (lang?.length === 0 || lang === undefined) {
 

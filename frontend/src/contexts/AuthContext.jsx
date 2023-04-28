@@ -54,6 +54,11 @@ const AuthContextProvider = (props) => {
       .catch((err) => {
         alert(err);
       });
+
+      console.log(authTokens, user, isAuthenticated)
+      return ()=>{
+        
+      }
   };
 
   const LogoutHandler = useCallback(() => {

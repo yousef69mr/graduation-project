@@ -1,7 +1,7 @@
-import React, { useReducer, lazy, useEffect, useContext } from "react";
+import React, { useReducer, useContext } from "react";
 import { FaFacebook, FaGoogle, FaTwitter } from "react-icons/fa";
 import css from "./SignUpForm.module.css";
-import { useNavigate, useHistory } from "react-router-dom";
+// import { useNavigate, useHistory } from "react-router-dom";
 import { t } from "i18next";
 import FormInput from "../FormInput/FormInput";
 import FormSelect from "../FormSelect/FormSelect";

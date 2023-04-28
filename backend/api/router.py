@@ -1,5 +1,5 @@
 from rest_framework import routers
-from .views import  LanguageView
+from system.views import LanguageView
 from users.views import UsersView
 # system_router = routers.DefaultRouter()
 

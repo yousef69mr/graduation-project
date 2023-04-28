@@ -8,6 +8,7 @@ from .models import User
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import MyTokenObtainPairSerializer
+# from system.models import invertedIndex
 # Create your views here.
 
 
@@ -18,7 +19,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 class UsersView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
+    # print(invertedIndex())
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
@@ -34,5 +35,5 @@ class CreateUserView(APIView):
 
 class UserView(APIView):
 
-    def get(self,request):
+    def get(self, request):
         pass

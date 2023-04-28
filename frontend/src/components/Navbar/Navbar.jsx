@@ -9,7 +9,7 @@ import SettingDropDown from "../../utils/SettingDropDownList";
 import { t } from "i18next";
 
 import "flag-icons/css/flag-icons.min.css";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import LanguageContextProvider from "../../contexts/LanguageContext";
 import ThemeContextProvider from "../../contexts/ThemeContext";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -50,7 +50,7 @@ const Navbar = (props) => {
         <AccountMenu
           activeUser={activeUser}
           logoutButton={
-            <Link to={"/"} onClick={logoutUser}>
+            <NavLink to={"/"} onClick={logoutUser}>
               <button
                 className="btn"
                 style={{ width: "100%" }}
@@ -59,31 +59,31 @@ const Navbar = (props) => {
                 <BiLogOut className="icon" style={{ fontSize: "18px" }} />
                 {t("navbar.logout")}
               </button>
-            </Link>
+            </NavLink>
           }
         />
       );
     } else {
       setAuthMenu(
-        <Link to={"/login_signup"}>
+        <NavLink to={"/login_signup"}>
           <button className="btn" onClick={removeNav}>
             {t("navbar.login")}
           </button>
-        </Link>
+        </NavLink>
       );
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, activeUser, logoutUser]);
 
   return (
     <section className={css.navBarSection}>
       <header className={`${css.header} flex`}>
         <div className={css.logoDiv}>
-          <Link to={"/"} className={`${css.logo} flex`}>
+          <NavLink to={"/"} className={`${css.logo} flex`}>
             <h1>
               <MdOutlineTravelExplore className="icon" />
               {t("navbar.title")}
             </h1>
-          </Link>
+          </NavLink>
         </div>
         <nav className={active}>
           <ul className={`flex ${css.navLists}`}>
@@ -97,35 +97,35 @@ const Navbar = (props) => {
               </ThemeContextProvider>
             </li>
             <li className={css.navItem} onClick={removeNav}>
-              <Link to={"/"} className={css.navLink}>
+              <NavLink to={"/"} className={css.navNavLink}>
                 {t("navbar.home")}
-              </Link>
+              </NavLink>
             </li>
             <li className={css.navItem} onClick={removeNav}>
-              <Link to={"#"} className={css.navLink}>
+              <NavLink to={"#"} className={css.navNavLink}>
                 {t("navbar.governorates")}
-              </Link>
+              </NavLink>
             </li>
             <li className={css.navItem} onClick={removeNav}>
-              <Link to={"#"} className={css.navLink}>
+              <NavLink to={"#"} className={css.navNavLink}>
                 {t("navbar.landmarks")}
-              </Link>
+              </NavLink>
             </li>
 
             <li className={css.navItem} onClick={removeNav}>
-              <Link to={"#"} className={css.navLink}>
+              <NavLink to={"#"} className={css.navNavLink}>
                 {t("navbar.recomendations")}
-              </Link>
+              </NavLink>
             </li>
             <li className={css.navItem} onClick={removeNav}>
-              <Link to={"/aboutus"} className={css.navLink}>
+              <NavLink to={"/aboutus"} className={css.navNavLink}>
                 {t("navbar.aboutus")}
-              </Link>
+              </NavLink>
             </li>
             <li className={css.navItem} onClick={removeNav}>
-              <Link to={"/contact"} className={css.navLink}>
+              <NavLink to={"/contact"} className={css.navNavLink}>
                 {t("navbar.contact")}
-              </Link>
+              </NavLink>
             </li>
             {authMenu}
           </ul>

@@ -4,7 +4,7 @@ django-cors-headers
 django-environ
 django-phonenumber-field
 djangorestframework==3.14.0
-PyJWT
 djangorestframework-simplejwt
 psycopg2
 Pillow
+googletrans==4.0.0-rc1

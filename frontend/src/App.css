@@ -31,6 +31,10 @@ form p {
 a {
   text-decoration: none;
 }
+nav a.active {
+  color: var(--PrimaryColor);
+  font-weight: bold;
+}
 
 a:active {
   transform: scale(0.9);

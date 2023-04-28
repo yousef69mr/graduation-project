@@ -29,7 +29,7 @@ const SettingDropDown = (props) => {
       ) : (
         <BsMoonStars className="icon" />
       )}
-    </button>,
+    </button>
   ];
 
   return (
