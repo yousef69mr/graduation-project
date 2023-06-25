@@ -9,7 +9,6 @@ import Footer from './components/Footer/Footer';
 
 import ScrollToTop from "react-scroll-to-top";
 
-import Data from "./Data/data.json";
 import BackGroundParticles from './components/BackGroundParticles/BackGroundParticles';
 
 import ChatBot from './components/ChatBot/ChatBot';
@@ -33,36 +32,9 @@ const CustomizedSnackbar = lazy(() =>
 const loading = (<div className='py-4 text-center'>loading.....</div>);
 
 const App = () => {
-  const [data, setData] = useState(Data);
+  
   //get active user with jwt token
-  const [activeUser, setActiveUser] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [isPotentialLogin, setIsPotentialLogin] = useState(false);
 
-
-  useEffect(() => {
-
-    // (async () => {
-    //   const response = await fetch(backendHost.concat('loggeduser'), {
-    //     headers: { "Content-Type": "application/json" },
-    //     credentials: "include",
-    //   });
-
-    //   const user = await response.json();
-    //   setActiveUser(user);
-    //   console.log(user);
-    //   // if (user != null) {
-    //   //   setLoggedIn(true)
-    //   // }
-    // })();
-
-  }, []);
-
-
-
-  useEffect(() => {
-    setData(Data);
-  }, [data]);
 
   return (
     <Suspense fallback={loading}>
@@ -74,11 +46,11 @@ const App = () => {
           <Navbar />
         </AuthContextProvider>
         <Routes>
-          <Route exact path='/' element={<HomePage governorates={data.Governorates} landmarks={data.Landmarks} />} />
+          <Route exact path='/' element={<HomePage />} />
           <Route path='/login_signup' element={
             <AuthContextProvider>
               <BlockedRoute>
-                <LoginSignupPage setIsPotentialLogin={setIsPotentialLogin} activeUser={activeUser} />
+                <LoginSignupPage />
               </BlockedRoute>
             </AuthContextProvider>
           }

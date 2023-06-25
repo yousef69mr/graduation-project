@@ -1,55 +1,140 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useReducer,
+  useEffect,
+  useCallback,
+} from "react";
+import api from "../axios";
 import { useTranslation } from "react-i18next";
 // import data from "../Data/data.json";
 import cookies from "js-cookie";
-import useFetch from "../hooks/useFetch";
-import { backendAPI } from "../index";
 
+import axios from "axios";
 export const LanguageContext = createContext();
 
 const LanguageContextProvider = (props) => {
-  const { data: languageList } = useFetch(backendAPI.concat("languages/"));
-
-  const [languages, setLanguages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  // const { data: languageList, } = useFetch(
+  //   backendAPI.concat("")
+  // );
 
   const { t } = useTranslation();
 
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      switch (action.type) {
+        case "SET_LANGUAGES":
+          return {
+            ...state,
+            languages: action.payload,
+          };
+        case "SET_CURRENT_LANGUAGE":
+          const currentLanguage = state.languages?.find(
+            (lang) => lang.code === action.payload
+          );
+          return {
+            ...state,
+            currentLanguage: currentLanguage,
+            currentLanguageCode: action.payload,
+          };
+        default:
+          return {
+            ...state,
+            ...action,
+          };
+      }
+    },
+    {
+      languages: [],
+      currentLanguageCode: cookies.get("i18next") || "en",
+      currentLanguage: { code: "en" },
+    }
+  );
+
+  const updateState = useCallback((action) => {
+    dispatch(action);
+  }, []);
+
   //change language
   //init values
-  const currentLanguageCode = cookies.get("i18next") || "en";
-  const initialLanguage = languages?.find((l) => l.code === currentLanguageCode);
+  // const currentLanguageCode = cookies.get("i18next") || "en";
+  // const initialLanguage = state.languages?.find(
+  //   (l) => l.code === currentLanguageCode
+  // );
 
-  const [currentLanguage, setCurrentLanguage] = useState({
-    code: currentLanguageCode,
-    language: initialLanguage,
-  });
+  // const [currentLanguage, setCurrentLanguage] = useState({
+  //   code: currentLanguageCode,
+  //   language: initialLanguage,
+  // });
 
   useEffect(() => {
-    setLanguages(languageList);
+    //   console.log(governoratesList);
+    let cancelToken;
+    const fetchLanguagesData = async () => {
+      try {
+        const languagesResponse = await api.api.get(`languages/`, {
+          cancelToken: new axios.CancelToken((c) => (cancelToken = c)),
+        });
+        const languagesData = languagesResponse.data;
+
+        dispatch({ type: "SET_LANGUAGES", payload: languagesData });
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("Request canceled", error.message);
+        } else {
+          console.error(error.message);
+          // setLoading(false);
+          // alert(error.message);
+        }
+      }
+    };
+
+    fetchLanguagesData();
+
+    return () => {
+      if (cancelToken) {
+        cancelToken();
+      }
+    };
+    // console.log(governorates);
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    // alert(JSON.stringify(state));
     // const currentLanguageCode = cookies.get("i18next") || "en";
-    const language = languages?.find((l) => l.code === currentLanguageCode);
+    // const language = state.languages?.find(
+    //   (l) => l.code === state.currentLanguageCode
+    // );
+    const currentLanguageCode = cookies.get("i18next") || "en";
+    
+    // alert(JSON.stringify(language));
+    // alert(language)
 
-    setCurrentLanguage({
-      code: currentLanguageCode,
-      language: language,
-    });
-
-    // console.log(lang)
-  }, [currentLanguageCode, languages, languageList]);
+    dispatch({ type: "SET_CURRENT_LANGUAGE", payload: currentLanguageCode });
+    
+  }, [state.currentLanguageCode]);
 
   useEffect(() => {
+    // setLoading(true);
     // console.log(currentLanguage.language);
-    document.body.dir = currentLanguage.language?.dir || "ltr";
+    // alert(JSON.stringify(state))
+    document.body.dir = state.currentLanguage?.dir || "ltr";
     document.title = t("app_title");
-  }, [currentLanguage, t]);
+    setLoading(false);
+  }, [state.currentLanguage, t]);
+
+  if (loading) {
+    return <>loading.....</>;
+  }
 
   return (
     <LanguageContext.Provider
       value={{
-        currentLanguageCode: currentLanguage.code,
-        currentLanguage: currentLanguage.language,
-        languages,
+        ...state,
         t,
+        updateState,
       }}
     >
       {props.children}

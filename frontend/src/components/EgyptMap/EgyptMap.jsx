@@ -11,10 +11,10 @@ const EgyptMap = (props) => {
   const [mapSize, setMapSize] = useState(600);
 
   window.addEventListener("resize", () => {
-    setMapSize(
-      window.getComputedStyle(document.querySelector("#Map_egypt_map__AUKNF"))
-        .width
-    );
+    // setMapSize(
+    //   window.getComputedStyle(document.querySelector("#Map_egypt_map__AUKNF"))
+    //     .width
+    // );
     setHeight(window.innerHeight);
 
     // console.log(mapSize);

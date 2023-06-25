@@ -13,7 +13,7 @@ import { BsSun, BsMoonStars } from "react-icons/bs";
 const SettingDropDown = (props) => {
   const { thumbnail } = props;
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const { currentLanguageCode, languages } = useContext(LanguageContext);
+  const { currentLanguageCode, languages} = useContext(LanguageContext);
   // dark light mode
 
   const buttons = [

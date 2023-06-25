@@ -7,7 +7,8 @@ import FormInput from "../FormInput/FormInput";
 import FormSelect from "../FormSelect/FormSelect";
 import InputContainer from "../InputContainer/InputContainer";
 import axios from "axios";
-import { backendAPI } from "../../index";
+// import { backendAPI } from "../../index";
+import api from "../../axios";
 import { AlertContext } from "../../contexts/AlertContext";
 
 const SignUpForm = (props) => {
@@ -131,8 +132,8 @@ const SignUpForm = (props) => {
       gender: state.gender,
     };
 
-    axios
-      .post(backendAPI.concat("createUser/"), user)
+    api.api
+      .post("create_user/", user)
       .then((response) => {
         if (response.status === 201) {
           console.log("created");

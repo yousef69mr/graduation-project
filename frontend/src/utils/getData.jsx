@@ -1,5 +1,6 @@
+import api from "../axios";
 const getData = (url) => {
-  return fetch(url, {
+  return fetch(api.baseURLApi + url, {
     method: "GET",
   })
     .then((response) => {
@@ -13,7 +14,7 @@ const getData = (url) => {
       return data;
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       return;
     });
 };

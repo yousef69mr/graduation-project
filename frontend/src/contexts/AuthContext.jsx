@@ -1,7 +1,9 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
-import { backendAPI } from "../index";
+import api from "../axios";
+
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const AuthContext = createContext();
 
@@ -21,44 +23,43 @@ const AuthContextProvider = (props) => {
       : null
   );
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const LoginHandler = async (e) => {
     e.preventDefault();
+    const cancelToken = axios.CancelToken.source();
+    try {
+      const formData = new FormData();
+      formData.append("email", e.target.email.value.toLowerCase());
+      formData.append("password", e.target.password.value);
 
-    await fetch(backendAPI.concat("token/"), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: e.target.email.value.toLowerCase(),
-        password: e.target.password.value,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setIsAuthenticated(true);
-        setAuthTokens(data);
-        setUser(jwt_decode(data.access));
-        localStorage.setItem("authTokens", JSON.stringify(data));
-        history("/dashboard");
-        window.location.reload(true);
-        // console.log(authTokens, user, isAuthenticated);
-      })
-      .catch((err) => {
-        alert(err);
+      const loginResponse = await api.api.post("token/", formData, {
+        cancelToken: cancelToken.token,
       });
 
-      console.log(authTokens, user, isAuthenticated)
-      return ()=>{
-        
+      if (loginResponse.status === 200) {
+        setIsAuthenticated(true);
+        setAuthTokens(loginResponse.data);
+        setUser(jwt_decode(loginResponse.data.access));
+        localStorage.setItem("authTokens", JSON.stringify(loginResponse.data));
+        // navigate("/dashboard");
+        window.location.reload(true);
+        // console.log(authTokens, user, isAuthenticated);
+      } else {
+        throw new Error(loginResponse.statusText);
       }
+    } catch (error) {
+      if (axios.isCancel(error)) {
+        console.error("Request cancelled");
+      } else {
+        console.error(error);
+      }
+    }
+
+    console.log(authTokens, user, isAuthenticated);
+    return () => {
+      cancelToken.cancel("cancelled");
+    };
   };
 
   const LogoutHandler = useCallback(() => {
@@ -66,19 +67,19 @@ const AuthContextProvider = (props) => {
     setUser(null);
     setIsAuthenticated(false);
     localStorage.removeItem("authTokens");
-    history("/login_signup");
-  }, [history]);
+    navigate("/login_signup");
+  }, [navigate]);
 
   const updateToken = useCallback(async () => {
-    await fetch(backendAPI.concat("token/refresh/"), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        refresh: authTokens?.refresh,
-      }),
-    })
+    await api.api
+      .post("token/refresh/", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh: authTokens?.refresh,
+        }),
+      })
       .then((response) => {
         if (!response.ok) {
           throw new Error(response.statusText);
