@@ -1,56 +1,70 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from "react";
 
 export const ThemeContext = createContext();
 
 const ThemeContextProvider = (props) => {
-  let theme = localStorage.getItem("theme");
-  let colortheme = localStorage.getItem("colortheme");
-
   const [state, setState] = useState({
-    theme: theme ? theme : "dark",
-    colorTheme: colortheme ? colortheme : "blue",
+    theme: localStorage.getItem("theme") || "dark",
+    colorTheme: localStorage.getItem("colortheme") || "blue",
   });
 
-  const ThemeHandler = (actionType, payload) => {
+  const ThemeHandler = useCallback((actionType, payload) => {
     switch (actionType) {
       case "CHANGE_COLOR_THEME":
-        let theme = localStorage.getItem("theme") || state.colorTheme;
-        setState({ theme: theme, colorTheme: payload });
-        localStorage.setItem("colortheme", payload);
-        return;
+        setState((prevState) => ({
+          ...prevState,
+          colorTheme: payload,
+        }));
+        break;
       case "TOGGLE_THEME":
-        let colortheme = localStorage.getItem("colortheme");
-        if (state.theme === "dark") {
-          setState({ colorTheme: colortheme, theme: "light" });
-          localStorage.setItem("theme", "light");
-        } else {
-          setState({ colorTheme: colortheme, theme: "dark" });
-          localStorage.setItem("theme", "dark");
-        }
-        return;
+        setState((prevState) => ({
+          ...prevState,
+          theme: prevState.theme === "dark" ? "light" : "dark",
+        }));
+
+        break;
       default:
-        return state;
+        break;
     }
-  };
+  }, []);
 
   const toggleTheme = () => {
     ThemeHandler("TOGGLE_THEME");
   };
+
   useEffect(() => {
     document.body.className = `${state.colorTheme} ${state.theme}`;
+    localStorage.setItem("theme", state.theme);
+    localStorage.setItem("colortheme", state.colorTheme);
   }, [state]);
 
   return (
     <ThemeContext.Provider
       value={{
         ...state,
-        ThemeHandler: ThemeHandler,
-        toggleTheme: toggleTheme,
+        ThemeHandler,
+        toggleTheme,
       }}
     >
       {props.children}
     </ThemeContext.Provider>
   );
+};
+
+export const useThemeContext = () => {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error(
+      "useThemeContext must be used within a ThemeContextProvider"
+    );
+  }
+  return context;
 };
 
 export default ThemeContextProvider;

@@ -10,9 +10,9 @@ import api from "../axios";
 import { useLanguageContext } from "./LanguageContext";
 import axios from "axios";
 
-export const GovernorateContext = createContext();
+export const TicketContext = createContext();
 
-const GovernorateContextProvider = (props) => {
+const TicketContextProvider = (props) => {
   // const currentLanguage = Cookies.get("i18next");
   const [loading, setLoading] = useState(true);
   const { currentLanguageCode } = useLanguageContext();
@@ -22,10 +22,10 @@ const GovernorateContextProvider = (props) => {
   const [state, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
-        case "SET_GOVERNORATES":
+        case "SET_TICKETS":
           return {
             ...state,
-            governorates: action.payload,
+            tickets: action.payload,
           };
         default:
           return {
@@ -35,7 +35,7 @@ const GovernorateContextProvider = (props) => {
       }
     },
     {
-      governorates: [],
+      tickets: [],
     }
   );
 
@@ -46,15 +46,14 @@ const GovernorateContextProvider = (props) => {
   useEffect(() => {
     //   console.log(governoratesList);
     let cancelToken;
-    const fetchGovernoratesData = async (languageCode) => {
+    const fetchTicketsData = async (languageCode) => {
       try {
-        const governoratesResponse = await api.api.get(
-          `${languageCode}/governorates/`,
-          { cancelToken: new axios.CancelToken((c) => (cancelToken = c)) }
-        );
-        const governoratesData = governoratesResponse.data;
+        const ticketsResponse = await api.api.get(`${languageCode}/tickets/`, {
+          cancelToken: new axios.CancelToken((c) => (cancelToken = c)),
+        });
+        const ticketsData = ticketsResponse.data;
 
-        dispatch({ type: "SET_GOVERNORATES", payload: governoratesData });
+        dispatch({ type: "SET_TICKETS", payload: ticketsData });
       } catch (error) {
         if (axios.isCancel(error)) {
           console.log("Request canceled", error.message);
@@ -67,7 +66,7 @@ const GovernorateContextProvider = (props) => {
     };
 
     setLoading(true);
-    fetchGovernoratesData(currentLanguageCode);
+    fetchTicketsData(currentLanguageCode);
     setLoading(false);
 
     return () => {
@@ -82,20 +81,20 @@ const GovernorateContextProvider = (props) => {
     return <>Loading......</>;
   }
   return (
-    <GovernorateContext.Provider value={{ ...state, updateState }}>
+    <TicketContext.Provider value={{ ...state, updateState }}>
       {props.children}
-    </GovernorateContext.Provider>
+    </TicketContext.Provider>
   );
 };
 
-export const useGovernorateContext = () => {
-  const context = useContext(GovernorateContext);
+export const useTicketContext = () => {
+  const context = useContext(TicketContext);
   if (context === undefined) {
     throw new Error(
-      "useGovernorateContext must be used within a GovernorateContextProvider"
+      "useTicketContext must be used within a TicketContextProvider"
     );
   }
   return context;
 };
 
-export default GovernorateContextProvider;
+export default TicketContextProvider;

@@ -10,15 +10,15 @@ const EgyptMap = (props) => {
   const [Height, setHeight] = useState(0);
   const [mapSize, setMapSize] = useState(600);
 
-  window.addEventListener("resize", () => {
-    // setMapSize(
-    //   window.getComputedStyle(document.querySelector("#Map_egypt_map__AUKNF"))
-    //     .width
-    // );
-    setHeight(window.innerHeight);
+  // window.addEventListener("resize", () => {
+  //   // setMapSize(
+  //   //   window.getComputedStyle(document.querySelector("#Map_egypt_map__AUKNF"))
+  //   //     .width
+  //   // );
+  //   setHeight(window.innerHeight);
 
-    // console.log(mapSize);
-  });
+  //   // console.log(mapSize);
+  // });
 
   useEffect(() => {
     setHeight(window.innerHeight - 76);
@@ -34,16 +34,13 @@ const EgyptMap = (props) => {
         <p>{t("Map_section.brief")}</p>
       </div>
       <div className={css.map_container}>
-        <ThemeContextProvider>
-          <LanguageContextProvider>
+        <LanguageContextProvider>
+          <ThemeContextProvider>
             <GovernorateContextProvider>
-              <Map
-                map_size={mapSize}
-                sectionHeight={Height}
-              />
+              <Map map_size={mapSize} sectionHeight={Height} />
             </GovernorateContextProvider>
-          </LanguageContextProvider>
-        </ThemeContextProvider>
+          </ThemeContextProvider>
+        </LanguageContextProvider>
       </div>
     </section>
   );

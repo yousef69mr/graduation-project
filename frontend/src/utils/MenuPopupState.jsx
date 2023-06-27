@@ -4,7 +4,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 
-import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 
 export default function MenuPopupState(props) {
@@ -30,7 +29,11 @@ export default function MenuPopupState(props) {
               <MenuItem
                 onClick={() => {
                   popupState.close();
-                  i18next.changeLanguage(data.code);
+                  props.updateState({
+                    type: "SET_CURRENT_LANGUAGE",
+                    payload: data.code,
+                  });
+
                   window.location.reload(true);
                 }}
                 disabled={data.code === props.currentLanguageCode}

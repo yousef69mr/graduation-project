@@ -1,10 +1,10 @@
-import React, { useReducer, useContext } from "react";
-import { FaFacebook, FaGoogle, FaTwitter } from "react-icons/fa";
-import css from "./LoginForm.module.css";
+import React, { useReducer } from "react";
+// import { FaFacebook, FaGoogle, FaTwitter } from "react-icons/fa";
+// import css from "./LoginForm.module.css";
 
 import FormInput from "../FormInput/FormInput";
 import { t } from "i18next";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 import InputContainer from "../InputContainer/InputContainer";
 
 const inputs = [
@@ -35,13 +35,13 @@ const LoginForm = (props) => {
     }
   );
 
-  const { loginUser } = useContext(AuthContext);
+  const { loginUser } = useAuthContext();
 
   return (
-    <form method="post" onSubmit={loginUser}>
+    <form method="POST" onSubmit={loginUser}>
       <h1>{t("signinform.title")}</h1>
 
-      <div className={css.social_container}>
+      {/* <div className={css.social_container}>
         <a href="#" className={css.social} title="facebook">
           <FaFacebook className="icon" />
         </a>
@@ -51,7 +51,7 @@ const LoginForm = (props) => {
         <a href="#" className={css.social} title="twitter">
           <FaTwitter className="icon" />
         </a>
-      </div>
+      </div> */}
       <p>or use your account</p>
       {inputs.map((input, i) => (
         <InputContainer key={input.id}>
@@ -68,7 +68,7 @@ const LoginForm = (props) => {
           />
         </InputContainer>
       ))}
-      <a href="#">{t("signinform.forgetPassword")}</a>
+      {/* <a href="#">{t("signinform.forgetPassword")}</a> */}
       <button className={props.btn} type="submit">
         {t("signinform.login")}
       </button>

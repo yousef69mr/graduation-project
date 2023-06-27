@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 
 export const AlertContext = createContext();
 
@@ -13,12 +13,12 @@ const AlertContextProvider = (props) => {
     switch (actionType) {
       case "UPDATE":
         setState({ message: payload.message, alertTheme: payload.alertTheme });
-        return;
+        break;
       case "RESET":
-        resetAlert()
-        return;
+        resetAlert();
+        break;
       default:
-        return state;
+        break;
     }
   };
 
@@ -31,6 +31,16 @@ const AlertContextProvider = (props) => {
       {props.children}
     </AlertContext.Provider>
   );
+};
+
+export const useAlertContext = () => {
+  const context = useContext(AlertContext);
+  if (context === undefined) {
+    throw new Error(
+      "useAlertContext must be used within a AlertContextProvider"
+    );
+  }
+  return context;
 };
 
 export default AlertContextProvider;

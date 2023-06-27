@@ -1,6 +1,8 @@
-import api from "../axios";
+import {backendAPI} from "../axios";
+
 const getData = (url) => {
-  return fetch(api.baseURLApi + url, {
+  console.log(backendAPI + url)
+  return fetch(backendAPI + url, {
     method: "GET",
   })
     .then((response) => {

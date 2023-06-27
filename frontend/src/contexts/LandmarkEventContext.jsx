@@ -10,9 +10,9 @@ import api from "../axios";
 import { useLanguageContext } from "./LanguageContext";
 import axios from "axios";
 
-export const GovernorateContext = createContext();
+export const LandmarkEventContext = createContext();
 
-const GovernorateContextProvider = (props) => {
+const LandmarkEventContextProvider = (props) => {
   // const currentLanguage = Cookies.get("i18next");
   const [loading, setLoading] = useState(true);
   const { currentLanguageCode } = useLanguageContext();
@@ -22,10 +22,10 @@ const GovernorateContextProvider = (props) => {
   const [state, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
-        case "SET_GOVERNORATES":
+        case "SET_LANDMARK_EVENTS":
           return {
             ...state,
-            governorates: action.payload,
+            landmarkEvents: action.payload,
           };
         default:
           return {
@@ -35,7 +35,7 @@ const GovernorateContextProvider = (props) => {
       }
     },
     {
-      governorates: [],
+      landmarkEvents: [],
     }
   );
 
@@ -46,15 +46,15 @@ const GovernorateContextProvider = (props) => {
   useEffect(() => {
     //   console.log(governoratesList);
     let cancelToken;
-    const fetchGovernoratesData = async (languageCode) => {
+    const fetchLandmarksData = async (languageCode) => {
       try {
-        const governoratesResponse = await api.api.get(
-          `${languageCode}/governorates/`,
+        const landmarksResponse = await api.api.get(
+          `${languageCode}/landmark_events/`,
           { cancelToken: new axios.CancelToken((c) => (cancelToken = c)) }
         );
-        const governoratesData = governoratesResponse.data;
+        const landmarkEventsData = landmarksResponse.data;
 
-        dispatch({ type: "SET_GOVERNORATES", payload: governoratesData });
+        dispatch({ type: "SET_LANDMARK_EVENTS", payload: landmarkEventsData });
       } catch (error) {
         if (axios.isCancel(error)) {
           console.log("Request canceled", error.message);
@@ -67,7 +67,7 @@ const GovernorateContextProvider = (props) => {
     };
 
     setLoading(true);
-    fetchGovernoratesData(currentLanguageCode);
+    fetchLandmarksData(currentLanguageCode);
     setLoading(false);
 
     return () => {
@@ -82,20 +82,20 @@ const GovernorateContextProvider = (props) => {
     return <>Loading......</>;
   }
   return (
-    <GovernorateContext.Provider value={{ ...state, updateState }}>
+    <LandmarkEventContext.Provider value={{ ...state, updateState }}>
       {props.children}
-    </GovernorateContext.Provider>
+    </LandmarkEventContext.Provider>
   );
 };
 
-export const useGovernorateContext = () => {
-  const context = useContext(GovernorateContext);
+export const useLandmarkEventContext = () => {
+  const context = useContext(LandmarkEventContext);
   if (context === undefined) {
     throw new Error(
-      "useGovernorateContext must be used within a GovernorateContextProvider"
+      "useLandmarkEventContext must be used within a LandmarkEventContextProvider"
     );
   }
   return context;
 };
 
-export default GovernorateContextProvider;
+export default LandmarkEventContextProvider;

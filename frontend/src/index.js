@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 
-import getData from './utils/getData';
+// import getData from './utils/getData';
 
-import i18next from "i18next";
-import LanguageDetector from 'i18next-browser-languagedetector';
-import HttpApi from 'i18next-http-backend';
-import { initReactI18next } from "react-i18next";
+// import i18next from "i18next";
+// import LanguageDetector from 'i18next-browser-languagedetector';
+// import HttpApi from 'i18next-http-backend';
+// import { initReactI18next } from "react-i18next";
+import { initializeLanguage } from './i18next'
 
 // require('events').EventEmitter.prototype._maxListeners = 100;
 
@@ -25,40 +26,41 @@ import { initReactI18next } from "react-i18next";
 
 
 
-async function initializeLanguage() {
-  const languagesPromise = getData('languages/');
+// async function initializeLanguage() {
+//   const languagesPromise = getData('languages/');
 
-  let lang = await languagesPromise;
+//   let lang = await languagesPromise;
 
-  // Backup solution
-  if (lang?.length === 0 || lang === undefined) {
-    const cachedData = await import('./Data/data.json');
-    lang = cachedData.languages;
-  }
+//   // Backup solution
+//   if (lang?.length === 0 || lang === undefined) {
+//     const cachedData = await import('./Data/data.json');
+//     lang = cachedData.languages;
+//   }
 
-  const languagesCodes = lang.map((value, index, array) => value.code);
+//   const languagesCodes = lang.map((value, index, array) => value.code);
 
-  i18next
-    .use(initReactI18next)
-    .use(LanguageDetector)
-    .use(HttpApi)
-    .init({
-      supportedLngs: [...languagesCodes],
-      fallbackLng: 'en',
-      detection: {
-        order: ['path', 'cookie', 'htmlTag', 'localStorage', 'subdomain'],
-        caches: ['cookie'],
-      },
-      backend: {
-        loadPath: '/assets/locales/{{lng}}/translation.json',
-      },
-      interpolation: {
-        escapeValue: false,
-      },
-    });
+//   i18next
+//     .use(initReactI18next)
+//     .use(LanguageDetector)
+//     .use(HttpApi)
+//     .init({
+//       supportedLngs: [...languagesCodes],
+//       fallbackLng: 'en',
+//       detection: {
+//         order: ['path', 'cookie', 'htmlTag', 'localStorage', 'subdomain'],
+//         caches: ['cookie'],
+//       },
+//       backend: {
+//         loadPath: '/assets/locales/{{lng}}/translation.json',
+//       },
+//       interpolation: {
+//         escapeValue: false,
+//       },
+//     });
 
-  console.log('supportedLngs', languagesCodes);
-}
+//   console.log('supportedLngs', languagesCodes);
+//   i18next.changeLanguage(i18next.language)
+// }
 // const languagesPromise = getData('languages/');
 
 // const LanguageHandler = async () => {

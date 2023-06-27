@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState,useContext } from "react";
 import api from "../axios";
 
 import jwt_decode from "jwt-decode";
@@ -119,6 +119,16 @@ const AuthContextProvider = (props) => {
       {props.children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuthContext = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error(
+      "useAuthContext must be used within a AuthContextProvider"
+    );
+  }
+  return context;
 };
 
 export default AuthContextProvider;

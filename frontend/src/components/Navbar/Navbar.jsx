@@ -1,4 +1,4 @@
-import React, { lazy, useContext, useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import css from "./navbar.module.css";
 import { MdOutlineTravelExplore } from "react-icons/md";
 import { AiFillCloseCircle, AiOutlineSetting } from "react-icons/ai";
@@ -12,13 +12,13 @@ import "flag-icons/css/flag-icons.min.css";
 import { NavLink } from "react-router-dom";
 import LanguageContextProvider from "../../contexts/LanguageContext";
 import ThemeContextProvider from "../../contexts/ThemeContext";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 //dynamic import
 const AccountMenu = lazy(() => import("../../utils/AccountMenu"));
 
 const Navbar = (props) => {
-  const { isAuthenticated, logoutUser, activeUser } = useContext(AuthContext);
+  const { isAuthenticated, logoutUser, activeUser } = useAuthContext();
   const [authMenu, setAuthMenu] = useState();
 
   //open sidebar
@@ -88,42 +88,42 @@ const Navbar = (props) => {
         <nav className={active}>
           <ul className={`flex ${css.navLists}`}>
             <li className={css.navItem}>
-              <ThemeContextProvider>
-                <LanguageContextProvider>
+              <LanguageContextProvider>
+                <ThemeContextProvider>
                   <SettingDropDown
                     thumbnail={<AiOutlineSetting className="icon" />}
                   />
-                </LanguageContextProvider>
-              </ThemeContextProvider>
+                </ThemeContextProvider>
+              </LanguageContextProvider>
             </li>
             <li className={css.navItem} onClick={removeNav}>
-              <NavLink to={"/"} className={css.navNavLink}>
+              <NavLink to={"/"} className={css.navLink}>
                 {t("navbar.home")}
               </NavLink>
             </li>
             <li className={css.navItem} onClick={removeNav}>
-              <NavLink to={"#"} className={css.navNavLink}>
+              <NavLink to={"#"} className={css.navLink}>
                 {t("navbar.governorates")}
               </NavLink>
             </li>
             <li className={css.navItem} onClick={removeNav}>
-              <NavLink to={"#"} className={css.navNavLink}>
+              <NavLink to={"#"} className={css.navLink}>
                 {t("navbar.landmarks")}
               </NavLink>
             </li>
 
             <li className={css.navItem} onClick={removeNav}>
-              <NavLink to={"#"} className={css.navNavLink}>
+              <NavLink to={"#"} className={css.navLink}>
                 {t("navbar.recomendations")}
               </NavLink>
             </li>
             <li className={css.navItem} onClick={removeNav}>
-              <NavLink to={"/aboutus"} className={css.navNavLink}>
+              <NavLink to={"/aboutus"} className={css.navLink}>
                 {t("navbar.aboutus")}
               </NavLink>
             </li>
             <li className={css.navItem} onClick={removeNav}>
-              <NavLink to={"/contact"} className={css.navNavLink}>
+              <NavLink to={"/contact"} className={css.navLink}>
                 {t("navbar.contact")}
               </NavLink>
             </li>

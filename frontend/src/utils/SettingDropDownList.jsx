@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 
 import { ThemeContext } from "../contexts/ThemeContext";
-import { LanguageContext } from "../contexts/LanguageContext";
+import { useLanguageContext } from "../contexts/LanguageContext";
 import MenuPopupState from "./MenuPopupState";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { BsSun, BsMoonStars } from "react-icons/bs";
@@ -13,7 +13,7 @@ import { BsSun, BsMoonStars } from "react-icons/bs";
 const SettingDropDown = (props) => {
   const { thumbnail } = props;
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const { currentLanguageCode, languages} = useContext(LanguageContext);
+  const { currentLanguageCode, languages,updateState } = useLanguageContext();
   // dark light mode
 
   const buttons = [
@@ -22,6 +22,7 @@ const SettingDropDown = (props) => {
       icons={true}
       currentLanguageCode={currentLanguageCode}
       data={languages}
+      updateState={updateState}
     />,
     <button onClick={toggleTheme} className="btn" name="mode">
       {theme === "light" ? (
@@ -29,7 +30,7 @@ const SettingDropDown = (props) => {
       ) : (
         <BsMoonStars className="icon" />
       )}
-    </button>
+    </button>,
   ];
 
   return (

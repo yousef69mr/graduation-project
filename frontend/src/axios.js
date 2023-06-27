@@ -3,8 +3,8 @@ import axios from "axios";
 
 
 
-export const backendBaseURL = "https://tourisco.onrender.com/";
-export const backendAPI = backendBaseURL.concat("api/");
+export const backendBaseURL = "https://tourisco.onrender.com";
+export const backendAPI = backendBaseURL.concat("/api/");
 
 
 const token = localStorage.getItem('authTokens')?.access || null
@@ -32,5 +32,6 @@ const baseURLApi = axios.create({
     baseURL: backendBaseURL,
 });
 
-export default { api, apiToken, baseURLApi };
+const api_root = { api, apiToken, baseURLApi };
+export default api_root
 

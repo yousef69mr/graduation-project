@@ -1,30 +1,33 @@
-import React, { useContext } from "react";
+import React from "react";
 import css from "./Map.module.css";
 import Tooltip from "@mui/material/Tooltip";
-import { ThemeContext } from "../../contexts/ThemeContext";
-import { GovernorateContext } from "../../contexts/GovernorateContext";
-
+import { useThemeContext } from "../../contexts/ThemeContext";
+import { backendBaseURL } from "../../axios";
+import { useGovernorateContext } from "../../contexts/GovernorateContext";
 
 const Card = (props) => {
   const { governorate } = props;
-  // console.log(governorate);
+  // console.log(backendBaseURL.concat(governorate?.governorate?.emblem));
   return (
     <div className={css.card}>
-      <img src={governorate.emblem} alt={governorate.name} />
-      <h1>{governorate.name}</h1>
-      <p>{governorate.description}</p>
+      <img
+        src={backendBaseURL.concat(governorate?.governorate?.emblem)}
+        alt={governorate?.governorate?.name}
+      />
+      <h1>{governorate?.title}</h1>
+      {/* <p>{governorate.description}</p> */}
     </div>
   );
 };
 
 const Map = (props) => {
-  const { governorates } = useContext(GovernorateContext);
-  const { ThemeHandler } = useContext(ThemeContext);
+  const { governorates } = useGovernorateContext();
+  const { ThemeHandler } = useThemeContext();
   // console.log(governorates[0]?.governorate);
 
   return (
     <map
-      id={css.egypt_map}
+      id={css.country_map}
       style={{ maxHeight: props.sectionHeight, height: `${props.map_size}` }}
     >
       <svg
