@@ -20,6 +20,7 @@ import AlertContextProvider from './contexts/AlertContext';
 const PrivateRoute = lazy(() => import('./utils/PrivateRoute'));
 const BlockedRoute = lazy(() => import('./utils/BlockedRoute'));
 const AuthContextProvider = lazy(() => import('./contexts/AuthContext'));
+const LanguageContextProvider = lazy(() => import('./contexts/LanguageContext'));
 const HomePage = lazy(() => import("./Pages/HomePage"));
 const LoginSignupPage = lazy(() => import('./Pages/LoginSignupPage'));
 const AboutusPage = lazy(() => import('./Pages/AboutusPage'));
@@ -40,7 +41,10 @@ const App = () => {
   return (
     <Suspense fallback={loading}>
       <BackGroundParticles />
-      <Chatbot />
+      <LanguageContextProvider>
+        <Chatbot />
+      </LanguageContextProvider>
+
       <Router>
         <ScrollToTop smooth component={<RxDoubleArrowUp style={{ height: "2rem !important" }} />} style={{ zIndex: "9000", textAlign: 'center', backgroundColor: 'var(--SecondaryColor)', color: 'var(--whiteColor)', fontSize: 20 }} />
         <AuthContextProvider>

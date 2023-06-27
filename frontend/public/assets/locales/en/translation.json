@@ -1,6 +1,11 @@
 {
   "app_title": "Tourisco",
   "language": "Language",
+  "send": "send",
+  "chatbot": {
+    "welcome_messages": ["Hi there! How can I help you today?"],
+    "input_placeholder": "Type your message here..."
+  },
   "navbar": {
     "search": "search",
     "title": "Tourisco",

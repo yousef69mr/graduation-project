@@ -23,7 +23,7 @@ code {
   --whiteColor: hsl(0, 0%, 100%);
   --blackcolor: hsl(201, 33%, 16%);
   --whiteColorDeam: hsl(0, 0%, 93%);
-  --greyText: rgb(190, 198, 190);
+
   --cardHover: #fff;
 }
 
@@ -38,7 +38,7 @@ code {
   --whiteColor: hsl(0, 0%, 100%);
   --blackcolor: hsl(201, 33%, 16%);
   --whiteColorDeam: hsl(0, 0%, 93%);
-  --greyText: rgb(190, 198, 190);
+
   --cardHover: #d3d0d0;
 }
 
@@ -76,7 +76,7 @@ code {
     hsl(359, 100%, 33%)
   );
   --overlay: rgb(127, 47, 55);
-  --overlay2:rgb(106, 16, 25);
+  --overlay2: rgb(106, 16, 25);
   transition: all 1s ease-in-out;
 }
 
@@ -94,4 +94,3 @@ code {
 
   /* -webkit-text-stroke: 0.5px var(--whiteColorDeam); */
 }
-

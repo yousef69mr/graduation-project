@@ -2,6 +2,11 @@
   "app_title": "توريسكو",
   "language": "اللغة",
   "welcome_message": "اهلا بكم",
+  "send": "إرسال",
+  "chatbot": {
+    "welcome_messages": [],
+    "input_placeholder": "أدخل رسالتك هنا... "
+  },
   "navbar": {
     "search": "البحث",
     "title": "توريسكو",

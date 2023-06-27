@@ -7,7 +7,7 @@ export const backendBaseURL = "https://tourisco.onrender.com";
 export const backendAPI = backendBaseURL.concat("/api/");
 
 
-const token = localStorage.getItem('authTokens')?.access || null
+export const token = localStorage.getItem('authTokens')?.access || null
 
 const apiToken = axios.create({
     baseURL: backendAPI,

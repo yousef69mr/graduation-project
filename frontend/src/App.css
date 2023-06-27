@@ -11,6 +11,24 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Set the width and height of the scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 2rem;
+}
+
+/* Set the background color of the scrollbar track */
+/* ::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+} */
+
+/* Set the color and style of the scrollbar thumb (the moving part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background-color: var(--PrimaryColor);
+  border-radius: 5px;
+  /* border: 2px solid #f1f1f1; */
+}
+
 form {
   background: var(--bodyColor);
   color: var(--textColor);

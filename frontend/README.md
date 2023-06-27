@@ -10,3 +10,7 @@
 1. add Ticket, landmark,landmark event contexts
 2. fix all contexts issues
 3. fix bugs and warnings
+
+### 0.4.2 version:
+
+1. add chatbot
