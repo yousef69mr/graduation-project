@@ -2,8 +2,17 @@
   "app_title": "Tourisco",
   "language": "Language",
   "send": "send",
+  "submit": "Submit",
+  "back": "Back",
+  "next": "Next",
   "chatbot": {
-    "welcome_messages": ["Hi there! How can I help you today?"],
+    "welcome_messages": [
+      "Hi there! How can I help you today?",
+      "Hey there! I'm Phero, your personal tourism guide. I'm excited to show you all the hidden gems and must-see attractions of our lovely city. What kind of activities are you interested in?",
+      "Hi, I'm Phero, and I'm thrilled to be your guide for this trip. Whether you're looking for historical landmarks, scenic views, or delicious local cuisine, I've got you covered. What can I help you discover today?",
+      "Hello! My name is Phero, and I'm here to make sure you have an amazing time while exploring our city. I have plenty of recommendations for you, so don't hesitate to ask me anything!",
+      "Greetings! I'm Phero, your friendly neighborhood tourism guide. I'm here to show you the best of what our city has to offer, and to make sure you have a memorable experience. What are you most excited to see or do during your trip?"
+    ],
     "input_placeholder": "Type your message here..."
   },
   "navbar": {
@@ -46,6 +55,19 @@
       "message": "Enter your personal details and start journey with us",
       "button": "Sign Up"
     }
+  },
+  "money": { "egypt": "{{money}} egyptian pounds" },
+  "form": {
+    "requiredField": "This Field is required",
+    "startDateBeforeEndDate": "End date must be after start date",
+    "email": "Invalid Email Format",
+    "invalidFileType": "Invalid File Type",
+    "uploadFile": "Choose a File",
+    "uploadFileSize": "File size is too big",
+    "urlField": "Invalid URL Format",
+    "minLength": "{{field}} length cannot be less than {{length}}",
+    "maxLength": "{{field}} length cannot exceed {{length}}",
+    "createdMessage":"{{instance}} created Successfully"
   },
   "signupform": {
     "title": "Create User",
@@ -109,5 +131,46 @@
     ],
     "forgetPassword": "Do you forget your password ?",
     "login": "Login"
+  },
+  "CreateTourPackageForm": {
+    "steps": [
+      {
+        "title": "Basic Information",
+        "fields": [
+          {
+            "label": "Tour Package Title",
+            "placeholder": "Tour Package Title"
+          },
+          {
+            "label": "Preffered Tourism Categories",
+            
+            "placeholder":"Select Tourism Category"
+
+          }
+        ]
+      },
+      {
+        "title": "Tour Duration",
+        "fields": [
+          {
+            "label": "Start Date"
+          },
+          {
+            "label": "End Date"
+          }
+        ]
+      },
+      {
+        "title": "Package Budget",
+        "fields": [
+          {
+            "label": "Budget",
+            "helperText": "Budget is in Egyptian pounds ....... airplane and Transportation fees not Included "
+          }
+        ]
+      }
+    ],
+    "loading":"Loading...",
+    "submit": "Create Tour Package"
   }
 }

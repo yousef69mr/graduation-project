@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useState,
 } from "react";
+import StandardLoader from "../Helper/Loader";
 import api from "../axios";
 import { useLanguageContext } from "./LanguageContext";
 import axios from "axios";
@@ -54,12 +55,13 @@ const TicketContextProvider = (props) => {
         const ticketsData = ticketsResponse.data;
 
         dispatch({ type: "SET_TICKETS", payload: ticketsData });
+        setLoading(false);
       } catch (error) {
         if (axios.isCancel(error)) {
           console.log("Request canceled", error.message);
         } else {
           console.error(error.message);
-          // setLoading(false);
+          setLoading(false);
           // alert(error.message);
         }
       }
@@ -67,7 +69,7 @@ const TicketContextProvider = (props) => {
 
     setLoading(true);
     fetchTicketsData(currentLanguageCode);
-    setLoading(false);
+    // setLoading(false);
 
     return () => {
       if (cancelToken) {
@@ -78,7 +80,7 @@ const TicketContextProvider = (props) => {
   }, [currentLanguageCode]);
 
   if (loading) {
-    return <>Loading......</>;
+    return <StandardLoader />;
   }
   return (
     <TicketContext.Provider value={{ ...state, updateState }}>

@@ -11,23 +11,21 @@ import ScrollToTop from "react-scroll-to-top";
 
 import BackGroundParticles from './components/BackGroundParticles/BackGroundParticles';
 
-// import Chatbot from './components/Chatbot/Chatbot';
-
-import AlertContextProvider from './contexts/AlertContext';
-
-
 //dynamic import
 const PrivateRoute = lazy(() => import('./utils/PrivateRoute'));
 const BlockedRoute = lazy(() => import('./utils/BlockedRoute'));
+const AlertContextProvider = lazy(() => import('./contexts/AlertContext'))
 const AuthContextProvider = lazy(() => import('./contexts/AuthContext'));
+const CategoriesContextProvider = lazy(() => import('./contexts/CategoriesContext'))
 const LanguageContextProvider = lazy(() => import('./contexts/LanguageContext'));
 const HomePage = lazy(() => import("./Pages/HomePage"));
 const LoginSignupPage = lazy(() => import('./Pages/LoginSignupPage'));
 const AboutusPage = lazy(() => import('./Pages/AboutusPage'));
 const DashboardPage = lazy(() => import('./Pages/DashboardPage'));
+const CreatePackagePage = lazy(() => import('./Pages/CreatePackagePage'))
 const Chatbot = lazy(() => import('./components/Chatbot/Chatbot'))
-const CustomizedSnackbar = lazy(() =>
-  import("./utils/CustomizedSnackbar")
+const MultiMessageSnackbar = lazy(() =>
+  import("./Helper/MultiMessageSnackbar")
 );
 
 
@@ -60,6 +58,19 @@ const App = () => {
             </AuthContextProvider>
           }
           />
+          <Route path='/create_package' element={
+            <AuthContextProvider>
+              <PrivateRoute>
+                <LanguageContextProvider>
+                  <CategoriesContextProvider>
+                    <AlertContextProvider>
+                      <CreatePackagePage />
+                    </AlertContextProvider>
+                  </CategoriesContextProvider>
+                </LanguageContextProvider>
+              </PrivateRoute>
+            </AuthContextProvider>
+          } />
           <Route path='/aboutus' element={<AboutusPage />} />
           <Route path='/dashboard' element={
             <AuthContextProvider>
@@ -76,9 +87,7 @@ const App = () => {
         <Footer />
       </Router>
       <AlertContextProvider>
-
-        <CustomizedSnackbar />
-
+        <MultiMessageSnackbar />
       </AlertContextProvider>
 
     </Suspense>

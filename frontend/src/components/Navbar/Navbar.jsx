@@ -113,7 +113,7 @@ const Navbar = (props) => {
             </li>
 
             <li className={css.navItem} onClick={removeNav}>
-              <NavLink to={"#"} className={css.navLink}>
+              <NavLink to={"/create_package"} className={css.navLink}>
                 {t("navbar.recomendations")}
               </NavLink>
             </li>

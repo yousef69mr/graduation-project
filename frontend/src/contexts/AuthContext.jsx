@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useEffect, useState,useContext } from "react";
+import React, {
+  createContext,
+  useCallback,
+  // useEffect,
+  useState,
+  useContext,
+} from "react";
 import api from "../axios";
 
 import jwt_decode from "jwt-decode";
@@ -71,15 +77,12 @@ const AuthContextProvider = (props) => {
   }, [navigate]);
 
   const updateToken = useCallback(async () => {
+    const cancelToken = axios.CancelToken.source();
+    const formData = new FormData();
+    formData.append("refresh", authTokens?.refresh);
+
     await api.api
-      .post("token/refresh/", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          refresh: authTokens?.refresh,
-        }),
-      })
+      .post("token/refresh/", formData, { cancelToken: cancelToken.token })
       .then((response) => {
         if (!response.ok) {
           throw new Error(response.statusText);
@@ -95,17 +98,20 @@ const AuthContextProvider = (props) => {
       .catch((err) => {
         LogoutHandler();
       });
+    return () => {
+      cancelToken.cancel("cancelled");
+    };
   }, [authTokens, LogoutHandler]);
 
-  useEffect(() => {
-    let minutes = 1000 * 60 * 4;
-    let interval = setInterval(() => {
-      if (authTokens) {
-        updateToken();
-      }
-    }, minutes);
-    return () => clearInterval(interval);
-  }, [authTokens, updateToken]);
+  // useEffect(() => {
+  //   let minutes = 1000 * 60 * 4;
+  //   let interval = setInterval(() => {
+  //     if (authTokens) {
+  //       updateToken();
+  //     }
+  //   }, minutes);
+  //   return () => clearInterval(interval);
+  // }, [authTokens, updateToken]);
 
   return (
     <AuthContext.Provider
@@ -124,9 +130,7 @@ const AuthContextProvider = (props) => {
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error(
-      "useAuthContext must be used within a AuthContextProvider"
-    );
+    throw new Error("useAuthContext must be used within a AuthContextProvider");
   }
   return context;
 };

@@ -9,6 +9,7 @@ import React, {
 import api from "../axios";
 import { useLanguageContext } from "./LanguageContext";
 import axios from "axios";
+import StandardLoader from "../Helper/Loader";
 
 export const GovernorateContext = createContext();
 
@@ -55,12 +56,13 @@ const GovernorateContextProvider = (props) => {
         const governoratesData = governoratesResponse.data;
 
         dispatch({ type: "SET_GOVERNORATES", payload: governoratesData });
+        setLoading(false);
       } catch (error) {
         if (axios.isCancel(error)) {
           console.log("Request canceled", error.message);
         } else {
           console.error(error.message);
-          // setLoading(false);
+          setLoading(false);
           // alert(error.message);
         }
       }
@@ -68,7 +70,7 @@ const GovernorateContextProvider = (props) => {
 
     setLoading(true);
     fetchGovernoratesData(currentLanguageCode);
-    setLoading(false);
+    // setLoading(false);
 
     return () => {
       if (cancelToken) {
@@ -79,7 +81,7 @@ const GovernorateContextProvider = (props) => {
   }, [currentLanguageCode]);
 
   if (loading) {
-    return <>Loading......</>;
+    return <StandardLoader />;
   }
   return (
     <GovernorateContext.Provider value={{ ...state, updateState }}>

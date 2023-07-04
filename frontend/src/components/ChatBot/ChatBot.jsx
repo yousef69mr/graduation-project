@@ -38,7 +38,7 @@ const Chatbot = () => {
   const sendMessage = async (text) => {
     if (text) {
       setMessages([...messages, { text: text, sender: css.user }]);
-
+      debugger;
       setIsLoading(true);
       let cancelToken;
       try {
@@ -53,10 +53,12 @@ const Chatbot = () => {
 
           const message = response.data;
           // alert(JSON.stringify(data));
+          debugger;
           setMessages([
             ...messages,
             { text: message.response, sender: css.bot },
           ]);
+          debugger;
         } else {
           const response = await api_root.api.post("chatbot/", formData, {
             cancelToken: new axios.CancelToken((c) => (cancelToken = c)),

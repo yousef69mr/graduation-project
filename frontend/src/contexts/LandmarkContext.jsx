@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useState,
 } from "react";
+import StandardLoader from "../Helper/Loader";
 import api from "../axios";
 import { useLanguageContext } from "./LanguageContext";
 import axios from "axios";
@@ -55,12 +56,13 @@ const LandmarkContextProvider = (props) => {
         const landmarksData = landmarksResponse.data;
 
         dispatch({ type: "SET_LANDMARKS", payload: landmarksData });
+        setLoading(false);
       } catch (error) {
         if (axios.isCancel(error)) {
           console.log("Request canceled", error.message);
         } else {
           console.error(error.message);
-          // setLoading(false);
+          setLoading(false);
           // alert(error.message);
         }
       }
@@ -68,7 +70,6 @@ const LandmarkContextProvider = (props) => {
 
     setLoading(true);
     fetchLandmarksData(currentLanguageCode);
-    setLoading(false);
 
     return () => {
       if (cancelToken) {
@@ -79,7 +80,7 @@ const LandmarkContextProvider = (props) => {
   }, [currentLanguageCode]);
 
   if (loading) {
-    return <>Loading......</>;
+    return <StandardLoader />;
   }
   return (
     <LandmarkContext.Provider value={{ ...state, updateState }}>
@@ -92,7 +93,7 @@ export const useLandmarkContext = () => {
   const context = useContext(LandmarkContext);
   if (context === undefined) {
     throw new Error(
-      "useLandmarkContext must be used within a GovernorateContextProvider"
+      "useLandmarkContext must be used within a LandmarkContextProvider"
     );
   }
   return context;

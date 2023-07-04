@@ -23,7 +23,7 @@ export default function MenuPopupState(props) {
           >
             {props.thumbnail}
           </Button>
-          <Menu {...bindMenu(popupState)}>
+          <Menu {...bindMenu(popupState)} sx={{ padding: '0px !important' }}>
             <MenuItem onClick={popupState.close}>{t("language")}</MenuItem>
             {props.data?.map((data, i) => (
               <MenuItem

@@ -28,40 +28,45 @@ const Map = (props) => {
   return (
     <map
       id={css.country_map}
-      style={{ maxHeight: props.sectionHeight, height: `${props.map_size}` }}
+      style={{ maxHeight: props.sectionHeight, height: `${props.map_size}px` }}
     >
-      <svg
-        baseProfile="tiny"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        version="1.2"
-        viewBox="0 0 1000 889"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {governorates?.map((instance) => (
-          <Tooltip
-            key={instance?.id}
-            title={<Card governorate={instance} />}
-            placement="top"
-            arrow
-          >
-            <path
-              key={instance.governorate.id}
-              d={instance.governorate?.shape}
-              id={instance.governorate.id}
-              name={instance.name}
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              data-bs-original-title={instance.governorate?.name}
-              onMouseOver={(e) =>
-                ThemeHandler("CHANGE_COLOR_THEME", instance.governorate?.theme)
-              }
+      {governorates?.length > 0 && (
+        <svg
+          baseProfile="tiny"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          version="1.2"
+          viewBox="0 0 1000 889"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {governorates?.map((instance) => (
+            <Tooltip
+              key={instance?.id}
+              title={<Card governorate={instance} />}
+              placement="top"
+              arrow
             >
-              {/* {console.log(instance.governorate?.theme)} */}
-            </path>
-          </Tooltip>
-        ))}
-      </svg>
+              <path
+                key={instance.governorate.id}
+                d={instance.governorate?.shape}
+                id={instance.governorate.id}
+                name={instance.name}
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                data-bs-original-title={instance.governorate?.name}
+                onMouseOver={(e) =>
+                  ThemeHandler(
+                    "CHANGE_COLOR_THEME",
+                    instance.governorate?.theme
+                  )
+                }
+              >
+                {/* {console.log(instance.governorate?.theme)} */}
+              </path>
+            </Tooltip>
+          ))}
+        </svg>
+      )}
     </map>
   );
 };

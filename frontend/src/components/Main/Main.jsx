@@ -1,18 +1,21 @@
 import React, { useEffect } from "react";
+import { useLandmarkContext } from "../../contexts/LandmarkContext";
+import Slider from "../Sliders/Slider";
 import css from "./main.module.css";
 import { t } from "i18next";
 
-import {
-  HiOutlineClipboardCheck,
-  HiOutlineLocationMarker,
-} from "react-icons/hi";
+// import {
+//   HiOutlineClipboardCheck,
+//   HiOutlineLocationMarker,
+// } from "react-icons/hi";
 
 import aos from "aos";
 import "aos/dist/aos.css";
 
 const Main = (props) => {
-  const Data = props.landmarks;
-
+  // const Data = props.landmarks;
+  const { landmarks } = useLandmarkContext();
+  console.log(landmarks);
   useEffect(() => {
     aos.init({ duration: 1500 });
   }, []);
@@ -25,7 +28,7 @@ const Main = (props) => {
         </h3>
       </div>
       <div className={`${css.secContent} grid`}>
-        {Data?.map((destination) => {
+        {/* {Data?.map((destination) => {
           return (
             <div
               data-aos="fade-up"
@@ -61,7 +64,9 @@ const Main = (props) => {
               </div>
             </div>
           );
-        })}
+        })} */}
+
+        <Slider data={landmarks} control={"landmark"} />
       </div>
     </section>
   );

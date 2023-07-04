@@ -1,5 +1,7 @@
 import React, { lazy, Suspense } from "react";
-import { CircularProgress } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+import LanguageContextProvider from "../contexts/LanguageContext";
+import LandmarkContextProvider from "../contexts/LandmarkContext";
 
 //dynamic import
 const EgyptMap = lazy(() => import("../components/EgyptMap/EgyptMap"));
@@ -17,7 +19,11 @@ const HomePage = (props) => {
       </Suspense>
 
       <Suspense fallback={<CircularProgress thickness={4.3} />}>
-        <Main landmarks={props.landmarks} />
+        <LanguageContextProvider>
+          <LandmarkContextProvider>
+            <Main />
+          </LandmarkContextProvider>
+        </LanguageContextProvider>
       </Suspense>
     </React.Fragment>
   );

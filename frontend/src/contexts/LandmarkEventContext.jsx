@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useState,
 } from "react";
+import StandardLoader from "../Helper/Loader";
 import api from "../axios";
 import { useLanguageContext } from "./LanguageContext";
 import axios from "axios";
@@ -55,12 +56,13 @@ const LandmarkEventContextProvider = (props) => {
         const landmarkEventsData = landmarksResponse.data;
 
         dispatch({ type: "SET_LANDMARK_EVENTS", payload: landmarkEventsData });
+        setLoading(false);
       } catch (error) {
         if (axios.isCancel(error)) {
           console.log("Request canceled", error.message);
         } else {
           console.error(error.message);
-          // setLoading(false);
+          setLoading(false);
           // alert(error.message);
         }
       }
@@ -68,7 +70,7 @@ const LandmarkEventContextProvider = (props) => {
 
     setLoading(true);
     fetchLandmarksData(currentLanguageCode);
-    setLoading(false);
+    // setLoading(false);
 
     return () => {
       if (cancelToken) {
@@ -79,7 +81,7 @@ const LandmarkEventContextProvider = (props) => {
   }, [currentLanguageCode]);
 
   if (loading) {
-    return <>Loading......</>;
+    return <StandardLoader />;
   }
   return (
     <LandmarkEventContext.Provider value={{ ...state, updateState }}>

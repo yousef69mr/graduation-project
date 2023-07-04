@@ -17,6 +17,11 @@
   width: 100%;
   flex-wrap: wrap;
 }
+
+form {
+  background-color: var(--bodyColor);
+}
+
 .signup,
 .signin {
   width: 50%;

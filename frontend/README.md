@@ -14,3 +14,9 @@
 ### 0.4.2 version:
 
 1. add chatbot
+
+### 0.5 version:
+
+1. add create package UI
+2. add Categories , Tour Packages Contexts
+3. add reusable Slider

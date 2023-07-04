@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
-import { AuthContext } from "../contexts/AuthContext";
+import React from "react";
+import { useAuthContext } from "../contexts/AuthContext";
 // import { useState } from "react";
 
 const DashboardPage = (props) => {
-  const {activeUser} = useContext(AuthContext);
+  const { activeUser } = useAuthContext();
   return (
     <React.Fragment>
       <div>dashboard</div>

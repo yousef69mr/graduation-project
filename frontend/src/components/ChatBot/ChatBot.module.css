@@ -98,7 +98,7 @@
   align-items: center;
   height: 20%;
   padding: 10px;
-  background-color: var(--whiteColor);
+  /* background-color: ; */
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
