@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import FormikController from "./FormikController";
 
-import {
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  Typography,
-  Container,
-  Box,
-  // FormHelperText,
-} from "@mui/material";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 // import CircularProgress from "@mui/material/CircularProgress";
 import StandardLoader from "../../Helper/Loader";
 
@@ -153,7 +150,7 @@ import { useTranslation } from "react-i18next";
 const MultiStepForm = (props) => {
   const { formName, steps, initialvalues, submitfunction } = props;
   // const [submitPanel, setSubmitPanel] = useState(false);
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(3);
   const { t } = useTranslation();
 
   const formik = useFormik({
@@ -284,12 +281,7 @@ const MultiStepForm = (props) => {
                     autoFocus={autoFocus}
                     type={type}
                     value={formik.values[name]}
-                    onChange={
-                      control === "select"
-                        ? (e, option) =>
-                            formik.setFieldValue(name, option?.value)
-                        : formik.handleChange
-                    }
+                    onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     required={required}
                     error={formik.touched[name] && Boolean(formik.errors[name])}
@@ -300,16 +292,16 @@ const MultiStepForm = (props) => {
                     }
                     options={options}
                     dir={dir && dir}
-                    firstoption={
-                      firstOption
-                        ? firstOption
-                        : {
-                            key: t(
-                              `${formName}.steps.${activeStep}.fields.${index}.firstOption`
-                            ),
-                            value: "",
-                          }
-                    }
+                    // firstoption={
+                    //   firstOption
+                    //     ? firstOption
+                    //     : {
+                    //         key: t(
+                    //           `${formName}.steps.${activeStep}.fields.${index}.firstOption`
+                    //         ),
+                    //         value: "",
+                    //       }
+                    // }
                     placeholder={
                       placeholder &&
                       t(
@@ -344,11 +336,7 @@ const MultiStepForm = (props) => {
                   autoFocus={autoFocus}
                   type={type}
                   value={formik.values[name]}
-                  onChange={
-                    control === "select"
-                      ? (e, option) => formik.setFieldValue(name, option?.value)
-                      : formik.handleChange
-                  }
+                  onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   required={required}
                   error={formik.touched[name] && Boolean(formik.errors[name])}
@@ -367,16 +355,16 @@ const MultiStepForm = (props) => {
                       `${formName}.steps.${activeStep}.fields.${index}.placeholder`
                     )
                   }
-                  firstoption={
-                    firstOption
-                      ? firstOption
-                      : {
-                          key: t(
-                            `${formName}.steps.${activeStep}.fields.${index}.firstOption`
-                          ),
-                          value: "",
-                        }
-                  }
+                  // firstoption={
+                  //   firstOption
+                  //     ? firstOption
+                  //     : {
+                  //         key: t(
+                  //           `${formName}.steps.${activeStep}.fields.${index}.firstOption`
+                  //         ),
+                  //         value: "",
+                  //       }
+                  // }
                   range={range && range}
                   disabled={disabled?.condition ? disabled.condition : disabled}
                   dimensions={dimensions && dimensions}
@@ -404,7 +392,7 @@ const MultiStepForm = (props) => {
                   </Button>
                 </Box>
                 {formik.values[name].length > 0 &&
-                  formik.values[name].map((array, i) => (
+                  formik.values[name]?.map((array, i) => (
                     <Box className="row" padding={3} key={i}>
                       {fields.map((input, j) => (
                         <Container sx={{ mt: 1, mb: 1 }} key={j}>
@@ -418,12 +406,13 @@ const MultiStepForm = (props) => {
                             autoFocus={input.autoFocus}
                             type={input.type}
                             value={formik.values[input.name]}
-                            onChange={
-                              control === "select"
-                                ? (e, option) =>
-                                    formik.setFieldValue(name, option?.value)
-                                : formik.handleChange
-                            }
+                            // onChange={
+                            //   control === "select"
+                            //     ? (e, option) =>
+                            //         formik.setFieldValue(name, option?.value)
+                            //     : formik.handleChange
+                            // }
+                            onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             required={input.required}
                             dir={dir && dir}
@@ -446,16 +435,16 @@ const MultiStepForm = (props) => {
                                 `${formName}.steps.${activeStep}.fields.${j}.placeholder`
                               )
                             }
-                            firstoption={
-                              firstOption
-                                ? firstOption
-                                : {
-                                    key: t(
-                                      `${formName}.steps.${activeStep}.fields.${j}.firstOption`
-                                    ),
-                                    value: "",
-                                  }
-                            }
+                            // firstoption={
+                            //   firstOption
+                            //     ? firstOption
+                            //     : {
+                            //         key: t(
+                            //           `${formName}.steps.${activeStep}.fields.${j}.firstOption`
+                            //         ),
+                            //         value: "",
+                            //       }
+                            // }
                             range={input.range && input.range}
                             disabled={
                               input.disabled?.condition

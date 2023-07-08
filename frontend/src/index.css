@@ -23,7 +23,7 @@ code {
   --whiteColor: hsl(0, 0%, 100%);
   --blackcolor: hsl(201, 33%, 16%);
   --whiteColorDeam: hsl(0, 0%, 93%);
-
+  --borderRadius: 20px;
   --cardHover: #fff;
 }
 
@@ -38,7 +38,7 @@ code {
   --whiteColor: hsl(0, 0%, 100%);
   --blackcolor: hsl(201, 33%, 16%);
   --whiteColorDeam: hsl(0, 0%, 93%);
-
+  --borderRadius: 20px;
   --cardHover: #d3d0d0;
 }
 
@@ -65,6 +65,7 @@ code {
   );
   --overlay: rgb(81, 127, 47);
   --overlay2: rgb(52, 105, 14);
+  --transparentColor: hsla(93, 96%, 45%, 0.597);
   transition: all 1s ease-in-out;
 }
 .red {
@@ -77,6 +78,7 @@ code {
   );
   --overlay: rgb(127, 47, 55);
   --overlay2: rgb(106, 16, 25);
+  --transparentColor: hsla(359, 93%, 34%, 0.536);
   transition: all 1s ease-in-out;
 }
 
@@ -90,6 +92,7 @@ code {
   );
   --overlay: hsl(45, 96%, 42%);
   --overlay2: hsl(45, 98%, 34%);
+  --transparentColor: hsla(45, 93%, 65%, 0.504);
   transition: all 1s ease-in-out;
 
   /* -webkit-text-stroke: 0.5px var(--whiteColorDeam); */

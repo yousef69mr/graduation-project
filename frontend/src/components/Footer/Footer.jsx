@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
-import css from "./footer.module.css";
+
 import video from "../../assets/video/This_is_Egypt.mp4";
-import { FiChevronRight, FiSend } from "react-icons/fi";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { Link, useNavigate } from "react-router-dom";
+import { FiChevronRight, FiChevronLeft, FiSend } from "react-icons/fi";
 import { MdOutlineTravelExplore } from "react-icons/md";
 import {
   AiFillInstagram,
@@ -12,12 +15,30 @@ import { FaTripadvisor } from "react-icons/fa";
 
 import aos from "aos";
 import "aos/dist/aos.css";
-import { t } from "i18next";
+
+import { useLandmarkContext } from "../../contexts/LandmarkContext";
+import { useLanguageContext } from "../../contexts/LanguageContext";
+import { useAuthContext } from "../../contexts/AuthContext";
+
+import css from "./footer.module.css";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { currentLanguage } = useLanguageContext();
+  const { landmarks } = useLandmarkContext();
+  const { isAuthenticated } = useAuthContext();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   useEffect(() => {
     aos.init({ duration: 2000 });
   }, []);
+
+  const listIcon =
+    currentLanguage?.dir === "rtl" ? (
+      <FiChevronLeft className="icon" />
+    ) : (
+      <FiChevronRight className="icon" />
+    );
 
   return (
     <footer className={css.footer}>
@@ -51,10 +72,10 @@ const Footer = () => {
         <div className={`${css.footerCard} flex`}>
           <div className={`${css.footerIntro} flex`}>
             <div className={css.logoDiv}>
-              <a href="#" className={`${css.logo} flex`}>
+              <Link to={"/"} className={`${css.logo} flex`}>
                 <MdOutlineTravelExplore className="icon" />
                 {t("app_title")}
-              </a>
+              </Link>
             </div>
 
             <div data-aos="fade-up" className={css.footerParagraph}>
@@ -65,6 +86,17 @@ const Footer = () => {
                 praesentium quisquam assumenda optio accusantium et!
               </p>
             </div>
+
+            {isAuthenticated && (
+              <Box data-aos="fade-up">
+                <Button
+                  className="btn border-radius"
+                  onClick={() => navigate("/add_landmark")}
+                >
+                  {t("create", { instance: t("landmark") })}
+                </Button>
+              </Box>
+            )}
 
             <div data-aos="fade-up" className={css.footerSocials}>
               <AiOutlineTwitter className={`icon ${css.icon}`} />
@@ -84,23 +116,23 @@ const Footer = () => {
               <span className={css.groupTitle}>Our Agency</span>
 
               <li className={`${css.footerList} flex`}>
-                <FiChevronRight className="icon" />
+                {listIcon}
                 Services
               </li>
               <li className={`${css.footerList} flex`}>
-                <FiChevronRight className="icon" />
+                {listIcon}
                 Insurance
               </li>
               <li className={`${css.footerList} flex`}>
-                <FiChevronRight className="icon" />
+                {listIcon}
                 Agency
               </li>
               <li className={`${css.footerList} flex`}>
-                <FiChevronRight className="icon" />
+                {listIcon}
                 Tourism
               </li>
               <li className={`${css.footerList} flex`}>
-                <FiChevronRight className="icon" />
+                {listIcon}
                 Payment
               </li>
             </div>
@@ -114,23 +146,23 @@ const Footer = () => {
               <span className={css.groupTitle}>Partners</span>
 
               <li className={`${css.footerList} flex`}>
-                <FiChevronRight className="icon" />
+                {listIcon}
                 Bookings
               </li>
               <li className={`${css.footerList} flex`}>
-                <FiChevronRight className="icon" />
+                {listIcon}
                 HostelWorld
               </li>
               <li className={`${css.footerList} flex`}>
-                <FiChevronRight className="icon" />
+                {listIcon}
                 Trivago
               </li>
               <li className={`${css.footerList} flex`}>
-                <FiChevronRight className="icon" />
+                {listIcon}
                 Rentcars
               </li>
               <li className={`${css.footerList} flex`}>
-                <FiChevronRight className="icon" />
+                {listIcon}
                 TripAdvisor
               </li>
             </div>
@@ -141,9 +173,22 @@ const Footer = () => {
               data-aos-duration="5000"
               className={css.linkGroup}
             >
-              <span className={css.groupTitle}>Last Minute</span>
+              <span className={css.groupTitle}>
+                {t("footer.latestLandmarks")}
+              </span>
 
-              <li className={`${css.footerList} flex`}>
+              {landmarks?.slice(0, 5)?.map((landmark) => (
+                <Link
+                  key={landmark?.landmark?.id}
+                  to={`/landmarks/${landmark?.landmark?.id}`}
+                >
+                  <li className={`${css.footerList} flex`}>
+                    {listIcon}
+                    {landmark?.title}
+                  </li>
+                </Link>
+              ))}
+              {/* <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Sharm ElSheikh
               </li>
@@ -162,7 +207,7 @@ const Footer = () => {
               <li className={`${css.footerList} flex`}>
                 <FiChevronRight className="icon" />
                 Marsa Matrouh
-              </li>
+              </li> */}
             </div>
           </div>
 

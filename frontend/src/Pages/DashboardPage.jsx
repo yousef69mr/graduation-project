@@ -8,7 +8,7 @@ const DashboardPage = (props) => {
     <React.Fragment>
       <div>dashboard</div>
       <div>
-        {activeUser ? "Hi" + activeUser.username : "you are not logged in"}
+        {activeUser ? "Hi" + activeUser?.username : "you are not logged in"}
       </div>
     </React.Fragment>
   );

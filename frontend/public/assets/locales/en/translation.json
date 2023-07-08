@@ -5,6 +5,15 @@
   "submit": "Submit",
   "back": "Back",
   "next": "Next",
+  "today": "today",
+  "tourism_categories": "Tourism Categories",
+  "readMore": "Read More",
+  "landmark": "landmark",
+  "create": "create {{instance}}",
+  "ERA": [
+    { "key": " Before Christ (B.C.)", "value": "BC" },
+    { "key": "Anno Domini (A.D.)", "value": "AD" }
+  ],
   "chatbot": {
     "welcome_messages": [
       "Hi there! How can I help you today?",
@@ -29,13 +38,15 @@
   },
   "Map_section": {
     "welcome_message": "Welcome To Egypt",
-    "brief": "The Ancient Sezilization in the middle east"
+    "brief": "The Ancient Civilization in the middle east"
   },
   "footer": {
     "send": "send",
     "emailPlaceholder": "Enter your Email Address",
     "title": "Keep in touch",
     "subTitle": "Travel with us",
+    "latestLandmarks": "Latest added Landmarks",
+
     "copyRights": "copyrights reserved - ©2023"
   },
   "gender": [
@@ -56,10 +67,11 @@
       "button": "Sign Up"
     }
   },
+
   "money": { "egypt": "{{money}} egyptian pounds" },
   "form": {
     "requiredField": "This Field is required",
-    "startDateBeforeEndDate": "End date must be after start date",
+    "startDateBeforeEndDate": "{{endDate}} must be after {{startDate}}",
     "email": "Invalid Email Format",
     "invalidFileType": "Invalid File Type",
     "uploadFile": "Choose a File",
@@ -67,7 +79,8 @@
     "urlField": "Invalid URL Format",
     "minLength": "{{field}} length cannot be less than {{length}}",
     "maxLength": "{{field}} length cannot exceed {{length}}",
-    "createdMessage":"{{instance}} created Successfully"
+    "createdMessage": "{{instance}} created Successfully",
+    "InvalidEmbededLink": "Invalid Google Maps embeded Link"
   },
   "signupform": {
     "title": "Create User",
@@ -133,6 +146,7 @@
     "login": "Login"
   },
   "CreateTourPackageForm": {
+    "title": "Create Tour Package",
     "steps": [
       {
         "title": "Basic Information",
@@ -143,9 +157,8 @@
           },
           {
             "label": "Preffered Tourism Categories",
-            
-            "placeholder":"Select Tourism Category"
 
+            "placeholder": "Select Tourism Category"
           }
         ]
       },
@@ -170,7 +183,117 @@
         ]
       }
     ],
-    "loading":"Loading...",
+    "loading": "Loading...",
     "submit": "Create Tour Package"
+  },
+  "CreateLandmarkForm": {
+    "steps": [
+      {
+        "title": "Landmark Basic Data",
+        "fields": [
+          {
+            "label": "Landmark Title",
+            "placeholder": "Enter Landmark title in ( ENGLISH )"
+          },
+          {
+            "label": "Landmark Image",
+            "placeholder": "Enter Landmark Image"
+          },
+          {
+            "label": "Landmark Address",
+            "placeholder": "Enter Landmark Address"
+          },
+
+          {
+            "label": "Governorate",
+            "placeholder": "Enter Landmark governorate"
+          },
+          {
+            "label": "landmark Tourism Categories",
+            "placeholder": "Enter Tourism Category"
+          },
+
+          {
+            "label": "Landmark Description",
+            "placeholder": "Enter your description"
+          },
+          {
+            "label": "Landmark embeded google maps link",
+            "placeholder": "Enter embeded google maps link",
+            "helperText": "URL must contains { /embed/ } section"
+          },
+
+          {
+            "label": "Landmark Type",
+            "placeholder": "Enter Landmark Type"
+          }
+        ]
+      },
+      {
+        "title": "Extra Optional Information",
+        "fields": [
+          {
+            "label": "Founder Name",
+            "placeholder": "Enter founder name, if you know it"
+          },
+          {
+            "label": "Foundation Date"
+          },
+          {
+            "label": "Foundation Era"
+          },
+          {
+            "label": "Landmark Height",
+            "placeholder": "Enter Landmark Height",
+            "helperText": "Height is measured in meter unit"
+          },
+          {
+            "label": "Landmark area",
+            "placeholder": "Enter Landmark area aproximetly",
+            "helperText": "Area is measured in meter squared unit"
+          }
+        ]
+      },
+      {
+        "title": "Landmark Events",
+        "fields": [
+          {
+            "label": "Event Title",
+            "placeholder": "Enter Event title"
+          },
+          {
+            "label": "Open Time"
+          },
+          {
+            "label": "Close Time"
+          },
+          {
+            "label": "Main Landmark Event"
+          },
+          {
+            "label": "Eternel Landmark Event",
+            "helperText": "if it is checked this means that the event is repeated every day"
+          },
+          {
+            "label": "Start Date"
+          },
+          {
+            "label": "End Date"
+          }
+        ]
+      },
+      {
+        "title": "Landmark Events Tickets",
+        "fields": [
+          {
+            "label": "Budget",
+            "inputs":[],
+            "helperText": "Budget is in Egyptian pounds ....... airplane and Transportation fees not Included "
+          }
+        ]
+      }
+    ],
+    "loading": "Loading...",
+    "submit": "Create Landmark"
   }
 }

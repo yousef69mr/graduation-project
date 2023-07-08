@@ -1,11 +1,11 @@
 import React, {
   createContext,
   useCallback,
-  // useEffect,
+  useEffect,
   useState,
   useContext,
 } from "react";
-import api from "../axios";
+import api_root from "../axios";
 
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
@@ -39,14 +39,14 @@ const AuthContextProvider = (props) => {
       formData.append("email", e.target.email.value.toLowerCase());
       formData.append("password", e.target.password.value);
 
-      const loginResponse = await api.api.post("token/", formData, {
+      const loginResponse = await api_root.api.post("token/", formData, {
         cancelToken: cancelToken.token,
       });
 
       if (loginResponse.status === 200) {
         setIsAuthenticated(true);
         setAuthTokens(loginResponse.data);
-        setUser(jwt_decode(loginResponse.data.access));
+        // setUser(jwt_decode(loginResponse.data.access));
         localStorage.setItem("authTokens", JSON.stringify(loginResponse.data));
         // navigate("/dashboard");
         window.location.reload(true);
@@ -59,6 +59,7 @@ const AuthContextProvider = (props) => {
         console.error("Request cancelled");
       } else {
         console.error(error);
+        alert(error);
       }
     }
 
@@ -73,35 +74,65 @@ const AuthContextProvider = (props) => {
     setUser(null);
     setIsAuthenticated(false);
     localStorage.removeItem("authTokens");
-    navigate("/login_signup");
+    navigate("/");
   }, [navigate]);
 
-  const updateToken = useCallback(async () => {
-    const cancelToken = axios.CancelToken.source();
-    const formData = new FormData();
-    formData.append("refresh", authTokens?.refresh);
+  // const updateToken = useCallback(async () => {
+  //   const cancelToken = axios.CancelToken.source();
+  //   const formData = new FormData();
+  //   formData.append("refresh", authTokens?.refresh);
 
-    await api.api
-      .post("token/refresh/", formData, { cancelToken: cancelToken.token })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(response.statusText);
+  //   await api.api
+  //     .post("token/refresh/", formData, { cancelToken: cancelToken.token })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error(response.statusText);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setIsAuthenticated(true);
+  //       setAuthTokens(data);
+  //       setUser(jwt_decode(data.access));
+  //       localStorage.setItem("authTokens", JSON.stringify(data));
+  //     })
+  //     .catch((err) => {
+  //       LogoutHandler();
+  //     });
+  //   return () => {
+  //     cancelToken.cancel("cancelled");
+  //   };
+  // }, [authTokens, LogoutHandler]);
+
+  useEffect(() => {
+    let cancelToken;
+    const fetchUserData = async () => {
+      try {
+        const userPromise = await api_root.apiToken.get("active_user/", {
+          cancelToken: new axios.CancelToken((c) => (cancelToken = c)),
+        });
+        // console.log(userPromise.data)
+        const userData = userPromise.data;
+        // alert(userData);
+        setUser(userData);
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("Request canceled", error.message);
+        } else {
+          console.error(error);
+          // alert(error);
         }
-        return response.json();
-      })
-      .then((data) => {
-        setIsAuthenticated(true);
-        setAuthTokens(data);
-        setUser(jwt_decode(data.access));
-        localStorage.setItem("authTokens", JSON.stringify(data));
-      })
-      .catch((err) => {
-        LogoutHandler();
-      });
-    return () => {
-      cancelToken.cancel("cancelled");
+      }
     };
-  }, [authTokens, LogoutHandler]);
+
+    fetchUserData();
+
+    return () => {
+      if (cancelToken) {
+        cancelToken();
+      }
+    };
+  }, [authTokens]);
 
   // useEffect(() => {
   //   let minutes = 1000 * 60 * 4;

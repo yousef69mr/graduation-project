@@ -16,7 +16,6 @@
     "dotenv": "^16.0.3",
     "flag-icons": "^6.6.6",
     "formik": "^2.4.2",
-    "formik-mui": "^5.0.0-alpha.0",
     "i18next": "^22.4.9",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.1.1",

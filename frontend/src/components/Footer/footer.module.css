@@ -142,6 +142,11 @@
 }
 .footer .secContent .footerCard .footerLinks .linkGroup {
   text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
 }
 .footer .secContent .footerCard .footerLinks .linkGroup .groupTitle {
   display: block;

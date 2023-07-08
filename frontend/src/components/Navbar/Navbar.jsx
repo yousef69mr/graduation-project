@@ -6,13 +6,14 @@ import { TbGridDots } from "react-icons/tb";
 import { BiLogOut } from "react-icons/bi";
 import SettingDropDown from "../../utils/SettingDropDownList";
 
-import { t } from "i18next";
-
+// import { t } from "i18next";
+import Button from "@mui/material/Button";
 import "flag-icons/css/flag-icons.min.css";
 import { NavLink } from "react-router-dom";
 import LanguageContextProvider from "../../contexts/LanguageContext";
 import ThemeContextProvider from "../../contexts/ThemeContext";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { useTranslation } from "react-i18next";
 
 //dynamic import
 const AccountMenu = lazy(() => import("../../utils/AccountMenu"));
@@ -20,7 +21,7 @@ const AccountMenu = lazy(() => import("../../utils/AccountMenu"));
 const Navbar = (props) => {
   const { isAuthenticated, logoutUser, activeUser } = useAuthContext();
   const [authMenu, setAuthMenu] = useState();
-
+  const { t } = useTranslation();
   //open sidebar
   const [active, setActive] = useState(`${css.navBar}`);
   const [toggle, setToggle] = useState(false);
@@ -50,16 +51,19 @@ const Navbar = (props) => {
         <AccountMenu
           activeUser={activeUser}
           logoutButton={
-            <NavLink to={"/"} onClick={logoutUser}>
-              <button
-                className="btn"
-                style={{ width: "100%" }}
-                onClick={removeNav}
-              >
-                <BiLogOut className="icon" style={{ fontSize: "18px" }} />
-                {t("navbar.logout")}
-              </button>
-            </NavLink>
+            // <NavLink to={"/"} onClick={logoutUser}>
+            <Button
+              className="btn"
+              style={{ width: "100%" }}
+              onClick={() => {
+                logoutUser();
+                removeNav();
+              }}
+            >
+              <BiLogOut className="icon" style={{ fontSize: "18px" }} />
+              {t("navbar.logout")}
+            </Button>
+            // </NavLink>
           }
         />
       );
@@ -72,7 +76,7 @@ const Navbar = (props) => {
         </NavLink>
       );
     }
-  }, [isAuthenticated, activeUser, logoutUser]);
+  }, [isAuthenticated, activeUser, logoutUser, t]);
 
   return (
     <section className={css.navBarSection}>

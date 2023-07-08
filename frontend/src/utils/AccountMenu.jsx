@@ -6,10 +6,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import { backendBaseURL } from "../axios";
 import { avatarFormater, capitalizeString } from "./StringFormattor";
 
 const AccountMenu = (props) => {
   const { logoutButton, activeUser } = props;
+  console.log(activeUser);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -31,9 +33,13 @@ const AccountMenu = (props) => {
             aria-expanded={open ? "true" : undefined}
           >
             <Avatar
-              sx={{ width: 40, height: 40, background: "var(--gradientColor)" }}
+              sx={{
+                width: 40,
+                height: 40,
+                background: "var(--gradientColor)",
+              }}
             >
-              {avatarFormater(activeUser.username)}
+              {avatarFormater(activeUser?.username)}
             </Avatar>
           </IconButton>
         </Tooltip>
@@ -74,15 +80,24 @@ const AccountMenu = (props) => {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem onClick={handleClose} style={{ gap: ".5rem" }}>
-          <Avatar />
-          {capitalizeString(activeUser.username)}
+          {activeUser?.image ? (
+            <Avatar
+              src={backendBaseURL + activeUser?.image}
+              srcSet={backendBaseURL + activeUser?.image}
+              alt={activeUser?.username}
+            />
+          ) : (
+            <Avatar alt={activeUser?.username} />
+          )}
+
+          {capitalizeString(activeUser?.username)}
           <br />
-          {activeUser.user_id}
+          {activeUser?.id}
         </MenuItem>
 
         <Divider />
 
-        <MenuItem onClick={handleClose}>{logoutButton}</MenuItem>
+        <MenuItem>{logoutButton}</MenuItem>
       </Menu>
     </React.Fragment>
   );

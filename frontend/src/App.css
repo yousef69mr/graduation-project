@@ -36,6 +36,10 @@ html {
   color: var(--PrimaryColor) !important;
 }
 
+.border-radius {
+  border-radius: var(--borderRadius, 20px) !important;
+}
+
 form {
   /* background: var(--bodyColor); */
   position: relative;
@@ -91,6 +95,9 @@ li {
   align-items: center;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
 .grid {
   display: grid;
   align-items: center;
@@ -99,7 +106,7 @@ li {
 .btn {
   padding: 0.6rem 1.5rem;
   background: var(--gradientColor);
-  color: var(--whiteColor);
+  color: var(--whiteColor) !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,11 +123,11 @@ li {
 }
 
 .btn:hover {
-  background: var(--SecondaryColor);
+  background: var(--SecondaryColor) !important;
 }
 
 button {
-  text-transform: capitalize;
+  text-transform: capitalize !important;
   outline: 1px solid var(--whiteColorDeam);
 }
 

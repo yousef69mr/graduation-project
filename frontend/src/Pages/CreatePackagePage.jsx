@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-
+import Typography from "@mui/material/Typography";
 import MultiStepForm from "../components/Forms/MultiStepForm";
 import { string, object, date, number, array } from "yup";
 import { useTranslation } from "react-i18next";
@@ -82,7 +82,7 @@ const CreatePackagePage = () => {
       ],
       validationSchema: object({
         title: string().required(t("form.requiredField")),
-        tourism_category: array().of(number().integer().moreThan(0)),
+        tourism_categories: array().of(number().integer().moreThan(0)),
         // .min(
         //   1,
         //   t("form.minLength", {
@@ -115,17 +115,27 @@ const CreatePackagePage = () => {
         startDate: date().required(t("form.requiredField")),
         endDate: date()
           .required(t("form.requiredField"))
-          .test("endDate", t("form.startDateBeforeEndDate"), function (value) {
-            if (this) {
-              const { startDate } = this.parent;
-              // console.log(this.parent);
-              return (
-                startDate &&
-                value &&
-                new Date(startDate).getTime() <= new Date(value).getTime()
-              );
+          .test(
+            "endDate",
+            t(
+              "form.startDateBeforeEndDate",
+              t("form.startDateBeforeEndDate", {
+                startDate: t(`${formName}.steps.1.fields.0.label`),
+                endDate: t(`${formName}.steps.1.fields.1.label`),
+              })
+            ),
+            function (value) {
+              if (this) {
+                const { startDate } = this.parent;
+                // console.log(this.parent);
+                return (
+                  startDate &&
+                  value &&
+                  new Date(startDate).getTime() <= new Date(value).getTime()
+                );
+              }
             }
-          }),
+          ),
       }),
     },
     {
@@ -256,10 +266,17 @@ const CreatePackagePage = () => {
       sx={{
         minHeight: `${window.innerHeight - 160}px`,
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
+      <Typography
+        variant="title"
+        sx={{ color: "var(--PrimaryColor)", fontSize: "36pt" }}
+      >
+        {t(`${formName}.title`)}
+      </Typography>
       <MultiStepForm
         formName={formName}
         initialvalues={initialValues}

@@ -18,18 +18,20 @@ const AlertContextProvider = lazy(() => import('./contexts/AlertContext'))
 const AuthContextProvider = lazy(() => import('./contexts/AuthContext'));
 const CategoriesContextProvider = lazy(() => import('./contexts/CategoriesContext'))
 const LanguageContextProvider = lazy(() => import('./contexts/LanguageContext'));
+const LandmarkContextProvider = lazy(() => import('./contexts/LandmarkContext'));
 const HomePage = lazy(() => import("./Pages/HomePage"));
 const LoginSignupPage = lazy(() => import('./Pages/LoginSignupPage'));
 const AboutusPage = lazy(() => import('./Pages/AboutusPage'));
 const DashboardPage = lazy(() => import('./Pages/DashboardPage'));
 const CreatePackagePage = lazy(() => import('./Pages/CreatePackagePage'))
+const CreateLandmarkPage = lazy(() => import('./Pages/CreateLandmarkPage'))
 const Chatbot = lazy(() => import('./components/Chatbot/Chatbot'))
 const MultiMessageSnackbar = lazy(() =>
   import("./Helper/MultiMessageSnackbar")
 );
 
 
-const loading = (<div className='py-4 text-center'>loading.....</div>);
+const loading = (<div className='py-4 text-center text-color'>loading.....</div>);
 
 const App = () => {
 
@@ -71,6 +73,19 @@ const App = () => {
               </PrivateRoute>
             </AuthContextProvider>
           } />
+          <Route path='/add_landmark' element={
+            <AuthContextProvider>
+              <PrivateRoute>
+                <LanguageContextProvider>
+                  <CategoriesContextProvider>
+                    <AlertContextProvider>
+                      <CreateLandmarkPage />
+                    </AlertContextProvider>
+                  </CategoriesContextProvider>
+                </LanguageContextProvider>
+              </PrivateRoute>
+            </AuthContextProvider>
+          } />
           <Route path='/aboutus' element={<AboutusPage />} />
           <Route path='/dashboard' element={
             <AuthContextProvider>
@@ -84,7 +99,13 @@ const App = () => {
             element={<Navigate to="/" replace />}
           />
         </Routes>
-        <Footer />
+        <AuthContextProvider>
+          <LanguageContextProvider>
+            <LandmarkContextProvider>
+              <Footer />
+            </LandmarkContextProvider>
+          </LanguageContextProvider>
+        </AuthContextProvider>
       </Router>
       <AlertContextProvider>
         <MultiMessageSnackbar />

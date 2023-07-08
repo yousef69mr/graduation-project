@@ -77,7 +77,7 @@ import React, {
         }
       };
       // console.log(governorates);
-    }, [currentLanguageCode]);
+    }, []);
   
     if (loading) {
       return <StandardLoader />;

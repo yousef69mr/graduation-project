@@ -70,21 +70,26 @@ export function Input(props) {
     return (
         <FormControl fullWidth className="inputField">
             <FormLabel sx={{ padding: '.5rem 14px' }} className="text-color inputLabel" htmlFor={name}> {label}{required && <span style={{ margin: ".4rem", color: "red" }}>*</span>}</FormLabel>
-            <TextField sx={{
-                "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "var(--textColor)", // change the border color
-                },
-                "& .MuiInputBase-input": {
-                    color: "var(--textColor)", // change the text color
-                },
-                borderRadius: "20px",
-                "& .MuiOutlinedInput-root": {
+            <TextField
+                className={`form-control ${error ? 'error' : ""}`}
+                sx={{
+                    "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "var(--textColor)", // change the border color
+                    },
+                    "& .MuiInputBase-input": {
+                        color: "var(--textColor)", // change the text color
+                    },
                     borderRadius: "20px",
-                },
-                "& .MuiAutocomplete-popupIndicator": {
-                    color: "var(--textColor)",
-                }
-            }} color={error ? "error" : ""} name={name} id={name} className="form-control" {...rest} required={required} />
+                    "& .MuiOutlinedInput-root": {
+                        borderRadius: "20px",
+                    },
+                    "& .MuiAutocomplete-popupIndicator": {
+                        color: "var(--textColor)",
+                    },
+                    '& input[type="date"]::-webkit-calendar-picker-indicator': {
+                        color: '#fff',
+                    },
+                }} color={error ? "error" : ""} name={name} id={name}  {...rest} required={required} />
             {error && (
                 <FormHelperText error>{errorText}</FormHelperText>
             )}
@@ -98,11 +103,27 @@ export function Input(props) {
 }
 
 export function TextArea(props) {
-    const { label, name, error, errorText, helperText, required, ...rest } = props
+    const { label, name, error, errorText, helperText, setfieldvalue, required, ...rest } = props
     return (
         <FormControl fullWidth className="inputField">
             <FormLabel sx={{ padding: '.5rem 14px' }} className="text-color inputLabel" htmlFor={name}> {label}{required && <span style={{ margin: ".4rem", color: "red" }}>*</span>}</FormLabel>
-            <textarea name={name} id={name} className="form-control" {...rest} required={required} />
+            <TextField
+                className={`form-control ${error ? 'error' : ""}`}
+                sx={{
+                    "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "var(--textColor)", // change the border color
+                    },
+                    "& .MuiInputBase-input": {
+                        color: "var(--textColor)", // change the text color
+                    },
+                    borderRadius: "20px",
+                    "& .MuiOutlinedInput-root": {
+                        borderRadius: "20px",
+                    },
+                    "& .MuiAutocomplete-popupIndicator": {
+                        color: "var(--textColor)",
+                    }
+                }} multiline rows={4} name={name} id={name}  {...rest} required={required} />
             {error && (
                 <FormHelperText error>{errorText}</FormHelperText>
             )}
@@ -133,7 +154,7 @@ export function DatasetInput(props) {
         setSelectAll(false);
         // alert(selectedOptions)
     };
-    const selectAllOption = options[0].value === '*' ? options[0] : null;
+    const selectAllOption = options[0]?.value === '*' ? options[0] : null;
 
     // alert(isMultiple)
 
@@ -165,6 +186,7 @@ export function DatasetInput(props) {
                     renderInput={(params) => (
                         <TextField
                             {...params}
+                            className={`${error ? 'error' : ""}`}
                             // sx={{ color: "white", borderRadius: "20px" }}
                             // name={input.name}
                             // label={t("EventsFilterForm.filterEvents")}
@@ -308,6 +330,7 @@ export function DatasetInput(props) {
                                 }
                             }}
                             placeholder={placeholder}
+                            className={`${error ? 'error' : ""}`}
                             required
                         />
                     )}
@@ -339,7 +362,8 @@ export function DatasetInput(props) {
 }
 
 export function SelectInput(props) {
-    const { label, firstoption, autoFocus, name, error, errorText, helperText, options, required, setfieldvalue, ...rest } = props
+    const { label, firstoption, autoFocus, name, error, errorText, helperText, placeholder, options, required, setfieldvalue, ...rest } = props
+
     return (
         <FormControl fullWidth className="inputField" style={{ width: "100%" }}>
             <FormLabel sx={{ padding: '.5rem 14px' }} className="text-color" htmlFor={name}>{label}{required && <span style={{ margin: ".4rem", color: "red" }}>*</span>}</FormLabel>
@@ -347,17 +371,42 @@ export function SelectInput(props) {
                 // autoHighlight
                 color={error ? "error" : ""}
                 fullWidth
-                sx={{ background: "var(--white-color)" }}
-                className="text-color"
+
+                sx={{
+                    "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "var(--textColor)", // change the border color
+                    },
+                    "& .MuiInputBase-input": {
+                        color: "var(--textColor)", // change the text color
+                    },
+                    borderRadius: "20px",
+                    "& .MuiOutlinedInput-root": {
+                        borderRadius: "20px",
+                    },
+                    "& .MuiAutocomplete-popupIndicator": {
+                        color: "var(--textColor)",
+                    }, '&:before': {
+                        borderColor: 'var(--textColor)',
+                    },
+                    '&:after': {
+                        borderColor: 'var(--textColor)',
+                    },
+                    '& svg': {
+                        color: 'var(--textColor)',
+                    },
+                }}
+                className={`text-color ${error ? 'error' : ""}`}
                 {...rest}
+                // onChange={onChange}
+
                 name={name}
                 id={name}
                 required={required}
             // style={{ width: "100%" }}
             >
-                {firstoption && (
-                    <MenuItem key={firstoption.value} value={firstoption.value} selected>
-                        {firstoption.key}
+                {placeholder && (
+                    <MenuItem value='' disabled selected>
+                        {placeholder}
                     </MenuItem>
                 )}
                 {options?.map(option => (
@@ -389,7 +438,7 @@ export function RadioButtons(props) {
             <RadioGroup
                 aria-label={name}
                 name={name}
-
+                className={`${error ? 'error' : ""}`}
                 row={dir === "row" ? true : false}
                 {...rest}
             >
@@ -421,7 +470,7 @@ export function CheckBoxes(props) {
     const { label, name, value, options, error, errorText, helperText, required, onChange, ...rest } = props
     return (
         <FormControl fullWidth className="inputField">
-            <FormLabel className="text-color"> {label}{required && <span style={{ margin: ".4rem", color: "red" }}>*</span>}</FormLabel>
+            <FormLabel sx={{ padding: '.5rem 14px' }} className="text-color"> {label}{required && <span style={{ margin: ".4rem", color: "red" }}>*</span>}</FormLabel>
             {
                 options?.map((option, index) => (
                     <FormControlLabel key={index} control={<Checkbox name={name} onChange={onChange} />} label={option.key} {...rest} />
@@ -522,8 +571,24 @@ export const FilePreview = (props) => {
 
     return (
         <FormControl fullWidth className="inputField">
-            <FormLabel className="text-color"> {label}{required && <span style={{ margin: ".4rem", color: "red" }}>*</span>}</FormLabel>
-            <TextField color={error ? "error" : ""} type="file" name={name} id={name} disabled={disabled} onChange={(e) => { onChange(e); handleFileInputChange(e); }} />
+            <FormLabel sx={{ padding: '.5rem 14px' }} className="text-color"> {label}{required && <span style={{ margin: ".4rem", color: "red" }}>*</span>}</FormLabel>
+            <TextField
+                className={`${error ? 'error' : ""}`}
+                sx={{
+                    "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "var(--textColor)", // change the border color
+                    },
+                    "& .MuiInputBase-input": {
+                        color: "var(--textColor)", // change the text color
+                    },
+                    borderRadius: "var(--borderRadius,20px)",
+                    "& .MuiOutlinedInput-root": {
+                        borderRadius: "var(--borderRadius,20px)",
+                    },
+                    "& .MuiAutocomplete-popupIndicator": {
+                        color: "var(--textColor)",
+                    }
+                }} color={error ? "error" : ""} type="file" name={name} id={name} disabled={disabled} onChange={(e) => { onChange(e); handleFileInputChange(e); }} />
 
             {/* <InputLabel fullWidth htmlFor={name} className={"fileUpload"}>
                 <Button variant="contained" component="span">

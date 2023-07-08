@@ -65,9 +65,18 @@ const Main = (props) => {
             </div>
           );
         })} */}
-
-        <Slider data={landmarks} control={"landmark"} />
       </div>
+      <Slider
+        breakpoints={{
+          1400: { slidesPerView: 4 },
+          856: { slidesPerView: 3 },
+          640: { slidesPerView: 2 },
+          0: { slidesPerView: 1 },
+        }}
+        data={landmarks}
+        control={"landmark"}
+        loop={true}
+      />
     </section>
   );
 };

@@ -1,8 +1,14 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import { ImBin } from "react-icons/im";
-import { Button, Container, Box, Typography } from "@mui/material";
+
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+// import { Button, Container, Box, Typography } from "@mui/material";
 import FormikController from "./FormikController";
+import StandardLoader from "../../Helper/Loader";
 import { useTranslation } from "react-i18next";
 
 const StandardForm = (props) => {
@@ -14,7 +20,7 @@ const StandardForm = (props) => {
     validationSchema: inputs.validationSchema,
     onSubmit: (values, { setSubmitting, setErrors }) => {
       // alert(JSON.stringify(values));
-      
+
       submitfunction(values, { setSubmitting, setErrors });
     },
   });
@@ -33,235 +39,285 @@ const StandardForm = (props) => {
     );
   };
   return (
-    <div className="transpant-card w-100 m-auto white-color mt-2 mb-2">
-      <form onSubmit={formik.handleSubmit}>
-        <Typography variant="h4" className="text-color">
-          {t(`${formName}.title`)}
-        </Typography>
-        <Box sx={{ margin: 2 }}>
-          {inputs.fields.map(
-            (
-              {
-                name,
-                label,
-                autoFocus,
-                type,
-                control,
-                required,
-                options,
-                renderOption,
-                renderInput,
-                firstOption,
-                condition,
-                helperText,
-                fields,
-                isList,
-                dimensions,
-                disabled,
-              },
-              index
-            ) =>
-              condition ? (
-                formik.values[condition.field] === condition.value && (
-                  <Container sx={{ mt: 1, mb: 1 }} key={index}>
-                    <FormikController
-                      name={name}
-                      label={t(`${formName}.inputs.${index}.label`)}
-                      control={control}
-                      // variant="outlined"
-                      autoFocus={autoFocus}
-                      type={type}
-                      value={formik.values[name]}
-                      onChange={
-                        control === "select"
-                          ? (e, option) =>
-                              option && formik.setFieldValue(name, option.value)
-                          : formik.handleChange
-                      }
-                      onBlur={formik.handleBlur}
-                      required={required}
-                      error={
-                        formik.touched[name] && Boolean(formik.errors[name])
-                      }
-                      errorText={formik.touched[name] && formik.errors[name]}
-                      helperText={helperText && helperText}
-                      options={options}
-                      disabled={
-                        disabled && disabled.condition
-                          ? disabled.condition
-                          : disabled
-                      }
-                      dimensions={dimensions && dimensions}
-                      // firstOption={
-                      //   firstOption
-                      //     ? firstOption
-                      //     : {
-                      //         key: t(
-                      //           `CreateOrganizationForm.inputs.${index}.firstOption`
-                      //         ),
-                      //         value: "",
-                      //       }
-                      // }
-                      // getOptionLabel={
-                      //   options && ((option) => option && option.key)
-                      // }
-                      // renderInput={options && renderInput}
-                      // renderOption={options && renderOption}
-                      setfieldvalue={formik.setFieldValue}
-                    />
-                  </Container>
-                )
-              ) : !isList ? (
-                <Container sx={{ mt: 1, mb: 1 }} key={index}>
+    <form onSubmit={formik.handleSubmit}>
+      <Box sx={{ width: "100%", margin: "1rem 0rem" }}>
+        {inputs?.fields.map(
+          (
+            {
+              name,
+              // label,
+              autoFocus,
+              type,
+              control,
+              required,
+              options,
+              dir,
+              // renderOption,
+              // renderInput,
+              // renderTags,
+              firstOption,
+              condition,
+              placeholder,
+              helperText,
+              fields,
+              isMultiple,
+              isList,
+              range,
+              disabled,
+              dimensions,
+            },
+            index
+          ) =>
+            condition ? (
+              formik.values[condition.field] === condition.value && (
+                <Box sx={{ mt: 1, mb: 1 }} key={index}>
                   <FormikController
                     name={name}
-                    label={t(`${formName}.inputs.${index}.label`)}
+                    label={t(
+                      `${formName}.steps.${activeStep}.fields.${index}.label`
+                    )}
                     control={control}
                     // variant="outlined"
                     autoFocus={autoFocus}
-                    type={type && type}
+                    type={type}
                     value={formik.values[name]}
                     onChange={
                       control === "select"
                         ? (e, option) =>
-                            option && formik.setFieldValue(name, option.value)
-                        : // : control === "file"
-                          // ? (e) => formik.setFieldValue(name, e.target.files[0])
-                          formik.handleChange
+                            formik.setFieldValue(name, option?.value)
+                        : formik.handleChange
                     }
                     onBlur={formik.handleBlur}
                     required={required}
                     error={formik.touched[name] && Boolean(formik.errors[name])}
                     errorText={formik.touched[name] && formik.errors[name]}
-                    helperText={helperText && helperText}
-                    options={options}
-                    disabled={
-                      disabled && disabled.condition
-                        ? disabled.condition
-                        : disabled
+                    helperText={
+                      helperText &&
+                      `${formName}.steps.${activeStep}.fields.${index}.helperText`
                     }
-                    dimensions={dimensions && dimensions}
-                    // firstOption={
+                    options={options}
+                    dir={dir && dir}
+                    // firstoption={
                     //   firstOption
                     //     ? firstOption
                     //     : {
                     //         key: t(
-                    //           `CreateOrganizationForm.inputs.${index}.firstOption`
+                    //           `${formName}.steps.${activeStep}.fields.${index}.firstOption`
                     //         ),
                     //         value: "",
                     //       }
                     // }
-                    // getOptionLabel={
-                    //   options && ((option) => option && option.key)
+                    placeholder={
+                      placeholder &&
+                      t(
+                        `${formName}.steps.${activeStep}.fields.${index}.placeholder`
+                      )
+                    }
+                    disabled={
+                      disabled.condition ? disabled.condition : disabled
+                    }
+                    dimensions={dimensions && dimensions}
+                    range={range && range}
+                    ismultiple={isMultiple}
+                    // getoptionlabel={
+                    //   options && ((option) => option && option?.key)
                     // }
-                    // renderInput={options && renderInput}
-                    // renderOption={options && renderOption}
-                    setfieldvalue={useCallback(formik.setFieldValue)}
+                    // renderTags={options && renderTags && renderTags}
+                    // renderInput={options && renderInput && renderInput}
+                    // renderOption={options && renderOption && renderOption}
+                    setfieldvalue={formik.setFieldValue}
                   />
-                </Container>
-              ) : (
-                <Container sx={{ mt: 1, mb: 1 }} key={index}>
-                  <Box>
-                    <Typography variant="h4" className="text-color">
-                      {t(`${formName}.inputs.${index}.title`)}
-                    </Typography>
-                    <Button
-                      className="buttons text-color"
-                      onClick={() => handleAddItem(name)}
-                    >
-                      {t("addLegalDocuments")}
-                    </Button>
-                  </Box>
-                  {formik.values[name].length > 0 &&
-                    formik.values[name].map((array, i) => (
-                      <Container className="row" padding={3} key={i}>
-                        {fields.map((input, j) => (
-                          <Container sx={{ mt: 1, mb: 1 }} key={j}>
-                            <FormikController
-                              name={`${name}[${i}].${input.name}`}
-                              index={j}
-                              label={t(`${formName}.inputs.${index}.title`)}
-                              control={input.control}
-                              // variant="outlined"
-                              autoFocus={input.autoFocus}
-                              type={input.type}
-                              value={formik.values[name]}
-                              onChange={
-                                control === "select"
-                                  ? (e, option) =>
-                                      option &&
-                                      formik.setFieldValue(name, option.value)
-                                  : formik.handleChange
-                              }
-                              onBlur={formik.handleBlur}
-                              required={input.required}
-                              error={
-                                formik.touched[input.name] &&
-                                Boolean(formik.errors[input.name])
-                              }
-                              errorText={
-                                formik.touched[input.name] &&
-                                formik.errors[input.name]
-                              }
-                              helperText={input.helperText && input.helperText}
-                              options={input.options && input.options}
-                              firstOption={
-                                firstOption
-                                  ? firstOption
-                                  : {
-                                      key: t(
-                                        `${formName}.inputs.${index}.fields.${i}.firstOption`
-                                      ),
-                                      value: "",
-                                    }
-                              }
-                              disabled={
-                                input.disabled && input.disabled.condition
-                                  ? input.disabled.condition
-                                  : input.disabled
-                              }
-                              dimensions={input.dimensions && input.dimensions}
-                              // getOptionLabel={
-                              //   input.options &&
-                              //   ((option) => option && option.key)
-                              // }
-                              // renderInput={input.options && input.renderInput}
-                              // renderOption={
-                              //   input.options && input.renderOption
-                              // }
-                              setfieldvalue={formik.setFieldValue}
-                            />
-                          </Container>
-                        ))}
-                        <Box>
-                          <Button
-                            variant="contained"
-                            color="error"
-                            onClick={() => handleRemoveItem(name, i)}
-                            disabled={formik.values[name].length === 1}
-                          >
-                            <ImBin />
-                          </Button>
-                        </Box>
-                      </Container>
-                    ))}
-                </Container>
+                </Box>
               )
-          )}
-        </Box>
+            ) : !isList ? (
+              <Box sx={{ mt: 1, mb: 1 }} key={index}>
+                <FormikController
+                  name={name}
+                  label={t(
+                    `${formName}.steps.${activeStep}.fields.${index}.label`
+                  )}
+                  control={control}
+                  // variant="outlined"
+                  autoFocus={autoFocus}
+                  type={type}
+                  value={formik.values[name]}
+                  onChange={
+                    control === "select"
+                      ? (e, option) => formik.setFieldValue(name, option?.value)
+                      : formik.handleChange
+                  }
+                  onBlur={formik.handleBlur}
+                  required={required}
+                  error={formik.touched[name] && Boolean(formik.errors[name])}
+                  errorText={formik.touched[name] && formik.errors[name]}
+                  helperText={
+                    helperText &&
+                    t(
+                      `${formName}.steps.${activeStep}.fields.${index}.helperText`
+                    )
+                  }
+                  options={options && options}
+                  dir={dir && dir}
+                  placeholder={
+                    placeholder &&
+                    t(
+                      `${formName}.steps.${activeStep}.fields.${index}.placeholder`
+                    )
+                  }
+                  // firstoption={
+                  //   firstOption
+                  //     ? firstOption
+                  //     : {
+                  //         key: t(
+                  //           `${formName}.steps.${activeStep}.fields.${index}.firstOption`
+                  //         ),
+                  //         value: "",
+                  //       }
+                  // }
+                  range={range && range}
+                  disabled={disabled?.condition ? disabled.condition : disabled}
+                  dimensions={dimensions && dimensions}
+                  ismultiple={isMultiple}
+                  // getoptionlabel={
+                  //   options && ((option) => option && option?.key)
+                  // }
+                  // renderTags={options && renderTags && renderTags}
+                  // renderInput={options && renderInput && renderInput}
+                  // renderOption={options && renderOption && renderOption}
+                  setfieldvalue={formik.setFieldValue}
+                />
+              </Box>
+            ) : (
+              <Box sx={{ mt: 1, mb: 1 }} key={index}>
+                <Box>
+                  <Typography variant="h4" className="text-color">
+                    {t(`${formName}.steps.${activeStep}.title`)}
+                  </Typography>
+                  <Button
+                    className="btn text-color"
+                    onClick={() => handleAddItem(name)}
+                  >
+                    {t("addTickets")}
+                  </Button>
+                </Box>
+                {formik.values[name].length > 0 &&
+                  formik.values[name].map((array, i) => (
+                    <Box className="row" padding={3} key={i}>
+                      {fields.map((input, j) => (
+                        <Container sx={{ mt: 1, mb: 1 }} key={j}>
+                          <FormikController
+                            name={`${name}[${index}].${input.name}`}
+                            label={t(
+                              `${formName}.steps.${activeStep}.fields.${j}.label`
+                            )}
+                            control={input.control}
+                            // variant="outlined"
+                            autoFocus={input.autoFocus}
+                            type={input.type}
+                            value={formik.values[input.name]}
+                            onChange={
+                              control === "select"
+                                ? (e, option) =>
+                                    formik.setFieldValue(name, option?.value)
+                                : formik.handleChange
+                            }
+                            onBlur={formik.handleBlur}
+                            required={input.required}
+                            dir={dir && dir}
+                            error={
+                              formik.touched[input.name] &&
+                              Boolean(formik.errors[input.name])
+                            }
+                            errorText={
+                              formik.touched[input.name] &&
+                              formik.errors[input.name]
+                            }
+                            helperText={
+                              input.helperText &&
+                              `${formName}.steps.${activeStep}.fields.${j}.helperText`
+                            }
+                            options={input.options && input.options}
+                            placeholder={
+                              input.placeholder &&
+                              t(
+                                `${formName}.steps.${activeStep}.fields.${j}.placeholder`
+                              )
+                            }
+                            // firstoption={
+                            //   firstOption
+                            //     ? firstOption
+                            //     : {
+                            //         key: t(
+                            //           `${formName}.steps.${activeStep}.fields.${j}.firstOption`
+                            //         ),
+                            //         value: "",
+                            //       }
+                            // }
+                            range={input.range && input.range}
+                            disabled={
+                              input.disabled?.condition
+                                ? input.disabled.condition
+                                : input.disabled
+                            }
+                            dimensions={input.dimensions && input.dimensions}
+                            ismultiple={input.isMultiple}
+                            // getOptionLabel={
+                            //   input.options &&
+                            //   ((option) => option && option?.key)
+                            // }
+                            // renderTags={
+                            //   input.options &&
+                            //   input.renderTags &&
+                            //   input.renderTags
+                            // }
+                            // renderInput={input.options && input.renderInput}
+                            // renderOption={input.options && input.renderOption}
+                            setfieldvalue={formik.setFieldValue}
+                          />
+                        </Container>
+                      ))}
+                      <Box>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          onClick={() => handleRemoveItem(name, i)}
+                          disabled={formik.values[name].length === 1}
+                        >
+                          <ImBin />
+                        </Button>
+                      </Box>
+                    </Box>
+                  ))}
+              </Box>
+            )
+        )}
+      </Box>
 
-        <div className="inputField">
-          <Button
-            type="submit"
-            disabled={formik.isSubmitting}
-            variant="contained"
-            className="buttons"
-          >
-            {t("submit")}
-          </Button>
-        </div>
-      </form>
-    </div>
+      <Box className="inputField">
+        <Button
+          type="submit"
+          disabled={formik.isSubmitting}
+          variant="contained"
+          className="btn"
+        >
+          {formik.isSubmitting ? t(`${formName}.loading`) : t("submit")}
+        </Button>
+      </Box>
+      {formik.isSubmitting && (
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            position: "fixed",
+            zIndex: "1000",
+            // background: "var(--overlay2)",
+            // opacity: "0.5",
+          }}
+        >
+          <StandardLoader />
+        </Box>
+      )}
+    </form>
   );
 };
 

@@ -56,6 +56,7 @@ const Chatbot = () => {
           debugger;
           setMessages([
             ...messages,
+            { text: text, sender: css.user },
             { text: message.response, sender: css.bot },
           ]);
           debugger;

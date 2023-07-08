@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import StandardLoader from "../Helper/Loader";
-import api from "../axios";
+import api_root from "../axios";
 import { useLanguageContext } from "./LanguageContext";
 import axios from "axios";
 
@@ -49,11 +49,11 @@ const LandmarkEventContextProvider = (props) => {
     let cancelToken;
     const fetchLandmarksData = async (languageCode) => {
       try {
-        const landmarksResponse = await api.api.get(
+        const landmarksPromise = await api_root.api.get(
           `${languageCode}/landmark_events/`,
           { cancelToken: new axios.CancelToken((c) => (cancelToken = c)) }
         );
-        const landmarkEventsData = landmarksResponse.data;
+        const landmarkEventsData = landmarksPromise.data;
 
         dispatch({ type: "SET_LANDMARK_EVENTS", payload: landmarkEventsData });
         setLoading(false);

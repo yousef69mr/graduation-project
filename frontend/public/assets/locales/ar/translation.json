@@ -6,6 +6,15 @@
   "submit": "إرسال",
   "back": "رجوع",
   "next": "التالى",
+  "today": "اليوم",
+  "tourism_categories": "أنواع السياحة",
+  "readMore": "اظهار المحتوى",
+  "landmark": "معلم سياحى",
+  "create": "إنشاء {{instance}}",
+  "ERA": [
+    { "key": "قبل الميلاد (ق.م.)", "value": "BC" },
+    { "key": "بعد الميلاد (م.)", "value": "AD" }
+  ],
   "chatbot": {
     "welcome_messages": [
       "أهلاً بك في مدينتنا الجميلة! اسمي فرو وأنا هنا لمساعدتك في استكشاف أفضل المعالم السياحية والتجارب التي يمكن تجربتها. من أين ترغب في بدء مغامرتك؟",
@@ -37,6 +46,7 @@
     "emailPlaceholder": "أدخل بريدك الإلكترونى",
     "title": "إبق على اتصال",
     "subTitle": "سافر معنا",
+    "latestLandmarks": "أحدث المعالم المضافة",
     "copyRights": "جميع الحقوق محفوظة - 2023© "
   },
   "gender": [
@@ -59,7 +69,7 @@
   "money": { "egypt": "{{money}} جنية مصرى" },
   "form": {
     "requiredField": "هذه الخانة مطلوبة",
-    "startDateBeforeEndDate": "يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء",
+    "startDateBeforeEndDate": "يجب أن يكون {{endDate}} بعد {{startDate}}",
     "email": "صيغة بريد الكترونى خاطئة",
     "invalidFileType": "نوع الملف غير مسموحة",
     "uploadFile": "اختار ملف",
@@ -67,7 +77,8 @@
     "urlField": "صيغة اللينك خاطئة",
     "minLength": "{{field}} لا يمكن أن تصبح أقل من  {{length}}",
     "maxLength": "{{field}} لا يمكن أن تصبح أكثر من {{length}}",
-    "createdMessage": "{{instance}} تم إنشاؤه بنجاح"
+    "createdMessage": "{{instance}} تم إنشاؤه بنجاح",
+    "InvalidEmbededLink": "صيغة لينك  مضمن لخرائط جوجل خاطئة"
   },
   "signupform": {
     "title": "إنشاء حساب",
@@ -133,6 +144,7 @@
     "login": "تسجيل دخول"
   },
   "CreateTourPackageForm": {
+    "title": "ابتكر رحلتك المميزة",
     "steps": [
       {
         "title": "معلومات أساسية",
@@ -171,5 +183,114 @@
     ],
     "loading": "جارى التحميل.....",
     "submit": "إنشاء رحلة سياحية"
+  },
+  "CreateLandmarkForm": {
+    "steps": [
+      {
+        "title": "بيانات المعلم السياحى",
+        "fields": [
+          {
+            "label": "اسم المكان",
+            "placeholder": "ادخل بيانات المكان"
+          },
+          {
+            "label": "صورة للمكان",
+            "placeholder": "ادخل صورة رئيسية للمكان"
+          },
+          {
+            "label": "عنوان المكان",
+            "placeholder": "ادخل بيانات المكان"
+          },
+
+          {
+            "label": "المحافظة",
+            "placeholder": "ادخل المحافظة التابعة له"
+          },
+          {
+            "label": "أنواع السياحة الخاصة بالمكان",
+            "placeholder": "أدخل نوع سياحة"
+          },
+
+          {
+            "label": "معلومات عن المكان",
+            "placeholder": "ادخل معلومات عن المكان"
+          },
+          {
+            "label": "لينك خريطة جوجل مضمن للمكان",
+            "placeholder": "ادخل رابط الخريطة المضمن",
+            "helperText": "اللينك يجب أن يحتوى على { /embed/ }"
+          },
+
+          {
+            "label": "تصنيف المكان",
+            "placeholder": "ادخل تصنيف المكان"
+          }
+        ]
+      },
+      {
+        "title": "بيانات إضافية",
+        "fields": [
+          {
+            "label": "اسم مؤسس المكان",
+            "placeholder": "أدخل اسم المؤسس إن كنت تعرفه"
+          },
+          {
+            "label": "تاريخ التأسيس"
+          },
+          {
+            "label": "الحقبة الزمنية للتأسيس"
+          },
+          {
+            "label": "ارتفاع المكان",
+            "placeholder": " ادخل ارتفاع المكان",
+            "helperText": "المسافة تًقاس بالمتر"
+          },
+          {
+            "label": "ارتفاع المكان",
+            "placeholder": "ادخل ارتفاع المكان",
+            "helperText": "المساحة تًقاس بالمتر المربع"
+          }
+        ]
+      },
+      {
+        "title": "فعاليات المكان",
+        "fields": [
+          {
+            "label": "اسم الفعالية",
+            "placeholder": "أدخل اسم الفعالية"
+          },
+          {
+            "label": "ميعاد الفتح"
+          },
+          {
+            "label": "ميعاد الإغلاق"
+          },
+          {
+            "label": "فعالية رئيسية"
+          },
+          {
+            "label": "فعالية مستمرة",
+            "helperText": "إذا تم تحديده ، فهذا يعني أن الحدث يتكرر كل يوم"
+          },
+          {
+            "label": "تاريخ البداية"
+          },
+          {
+            "label": "تاريخ النهاية"
+          }
+        ]
+      },
+      {
+        "title": "تذاكر الدخول",
+        "fields": [
+          {
+            "label": "Budget",
+            "helperText": "Budget is in Egyptian pounds ....... airplane and Transportation fees not Included "
+          }
+        ]
+      }
+    ],
+    "loading": "Loading...",
+    "submit": "Create Tour Package"
   }
 }
